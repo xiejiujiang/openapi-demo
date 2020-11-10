@@ -100,19 +100,27 @@
     <repositories>
         <repository>
             <id>central</id>
-            <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <layout>default</layout>
-            <!-- 是否开启发布版构件下载 -->
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
-            <!-- 是否开启快照版构件下载 -->
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <finalName>${project.artifactId}</finalName>
