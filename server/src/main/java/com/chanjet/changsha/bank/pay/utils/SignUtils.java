@@ -113,7 +113,7 @@ public class SignUtils {
      * @throws Exception
      */
     public static String signData(String data) throws GeneralSecurityException, IOException {
-        InputStream in = new java.io.FileInputStream("/Users/zsc/IdeaProjects/changsha-bank-pay-service/src/main/resources/BCS_private_key.pfx");
+        InputStream in = new java.io.FileInputStream("/Users/zsc/IdeaProjects/changsha-bank-pay-service/server/src/main/resources/BCS_private_key.pfx");
         PrivateKey privateKey = CertUtil.readPrivateKeyFromPKCS12StoredFile(in, "123456");
         in.close();
         // 使用SHA-1签名算法对证书进行签名
@@ -130,7 +130,7 @@ public class SignUtils {
      * @throws Exception
      */
     public static boolean verify(String signData, String outBody) throws IOException, GeneralSecurityException {
-        InputStream in = new java.io.FileInputStream("/Users/zsc/IdeaProjects/changsha-bank-pay-service/src/main/resources/BCS_public_key.cer");
+        InputStream in = new java.io.FileInputStream("/Users/zsc/IdeaProjects/changsha-bank-pay-service/server/src/main/resources/BCS_public_key.cer");
         PublicKey publicKey = CertUtil.readPublicKeyFromX509StoredFile(in);// 读取公钥
         in.close();
         byte[] signDataBytes = hexStringToByte(signData);// 签名数据字节
@@ -192,10 +192,10 @@ public class SignUtils {
     public static void main(String[] args) throws IOException, GeneralSecurityException {
         TreeMap<String, String> map = new TreeMap<>();
         map.put("BackUrl", "https://inte-openapi.chanjet.com");
-        map.put("CardNo", "134610224910212580");
+        map.put("CardNo", "134514776561378080");
         map.put("ECustId", "E2020052200035");
-        map.put("MerchOrder", "2020110515112777");
-        map.put("OrderAmount", "0.01");
+        map.put("MerchOrder", "20201105151156242");
+        map.put("OrderAmount", "0.02");
         map.put("PayMethod", "7");
         map.put("Remark", "pos_alipay");
         map.put("Service_version", "1.0");

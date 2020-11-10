@@ -9,13 +9,19 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.chanjet.changsha.bank</groupId>
-    <artifactId>changsha-bank-pay-service</artifactId>
+    <artifactId>changsha-bank-pay</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>changsha-bank-pay</name>
     <description>changsha-bank-pay</description>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
+    <modules>
+        <module>server</module>
+        <module>front</module>
+    </modules>
 
 </project>

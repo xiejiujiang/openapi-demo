@@ -1,6 +1,6 @@
 package com.chanjet.changsha.bank.pay.web.interceptor;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class LogClientHttpRequestInterceptor implements ClientHttpRequestInterce
            }
        }
 
-       log.info(JSON.toJSONString(RestLog.builder().costTime(stopWatch.getLastTaskTimeMillis()).headers(request.getHeaders()).method(request.getMethodValue())
+       log.info(new Gson().toJson(RestLog.builder().costTime(stopWatch.getLastTaskTimeMillis()).headers(request.getHeaders()).method(request.getMethodValue())
                .reqUrl(request.getURI().toString()).reqBody(new String(body, StandardCharsets.UTF_8)).resBody(resBody.toString()).resStatus(response.getRawStatusCode()).build()));
        return response;
    }
