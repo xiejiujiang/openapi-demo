@@ -1,0 +1,27 @@
+server:
+  port: 9999
+spring:
+  datasource:
+    url: jdbc:postgresql://pgm-2ze1c5g56k8qi62814790.pg.rds.aliyuncs.com:3433/developer_center
+    username: developer_center
+    password: g4u5w2m3
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+
+app:
+  config:
+    #长沙银行支付网关地址
+    csBankUrl: http://test.bankofchangsha.com
+    #畅捷通开放平台地址
+    chanjetOpenUrl: https://inte-openapi.chanjet.com
+    #畅捷通开放平台appKey
+    appKey: ptPrU0YV
+    #畅捷通开放平台appSecret
+    appSecret: 6C901AFCA78DEC78FCD67D7EA8DC9C0B
+    #加解密key
+    encryptKey: 9876543210987654
+
+

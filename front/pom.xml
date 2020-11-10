@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.chanjet.changsha.bank</groupId>
+    <artifactId>changsha-bank-pay-front</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>changsha-bank-pay-front</name>
+    <description>changsha-bank-pay-front</description>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>dist</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+
+                    <!--                    <execution>-->
+                    <!--                        <id>exec-npm-clean</id>-->
+                    <!--                        <phase>prepare-package</phase>-->
+                    <!--                        <goals>-->
+                    <!--                            <goal>exec</goal>-->
+                    <!--                        </goals>-->
+                    <!--                        <configuration>-->
+                    <!--                            <executable>npm</executable>-->
+                    <!--                            <arguments>-->
+                    <!--                                <argument>cache</argument>-->
+                    <!--                                <argument>clean</argument>-->
+                    <!--                                <argument>&#45;&#45;force</argument>-->
+                    <!--                            </arguments>-->
+                    <!--                            <workingDirectory>${basedir}</workingDirectory>-->
+                    <!--                        </configuration>-->
+                    <!--                    </execution>-->
+
+                    <execution>
+                        <id>exec-npm-install</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                                <!--                                <argument>&#45;&#45;production</argument>-->
+                            </arguments>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>exec-npm-run-build</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>
