@@ -2,9 +2,6 @@ package com.chanjet.changsha.bank.pay.config;
 
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.command.builder.SpiBuilder;
-import com.chanjet.changsha.bank.pay.event.EventHandler;
-import com.chanjet.changsha.bank.pay.event.content.AppTicketContent;
-import com.chanjet.changsha.bank.pay.event.handler.AppTicketHandler;
 import com.chanjet.openapi.sdk.java.ChanjetClient;
 import com.chanjet.openapi.sdk.java.DefaultChanjetClient;
 import io.micrometer.core.instrument.MeterRegistry;
