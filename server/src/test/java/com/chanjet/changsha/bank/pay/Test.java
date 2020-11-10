@@ -15,9 +15,9 @@ public class Test {
     public void test() {
         HashMap<String, String> map = new HashMap<>();
         map.put("BackUrl", "https://inte-openapi.chanjet.com");
-        map.put("CardNo", "134580606599679631");
+        map.put("CardNo", "134525978162423622");
         map.put("ECustId", "E2020052200035");
-        map.put("MerchOrder", "202011098888");
+        map.put("MerchOrder", "202011091111");
         map.put("OrderAmount", "0.02");
         map.put("PayMethod", "7");
         map.put("Remark", "weixin");
@@ -35,8 +35,8 @@ public class Test {
         TreeMap<String, String> map2 = new TreeMap<>();
         map2.put("ECustId", "E2020052200035");
         map2.put("Service_version", "1.0");
-        map2.put("OrderId", "202011103001672953");
-        map2.put("RePaymentSn", "1234567890");
+        map2.put("OrderId", "202011103001680953");
+        map2.put("RePaymentSn", "1234567892");
         String signature2 = SignUtils.sign(map2);
         System.out.println("查询退款订单签名：" + signature2);
 
@@ -51,10 +51,10 @@ public class Test {
         TreeMap<String, String> map4 = new TreeMap<>();
         map4.put("ECustId", "E2020052200035");
         map4.put("Service_version", "1.0");
-        map4.put("OrderId", "202011103001672953");
+        map4.put("OrderId", "202011103001680953");
         map4.put("CancelReason", "退款");
-        map4.put("RefundAmount", "0.01");
-        map4.put("ERefundSn","1234567890");
+        map4.put("RefundAmount", "0.02");
+        map4.put("ERefundSn","1234567892");
         String signature4 = SignUtils.sign(map4);
         System.out.println("申请退款签名：" + signature4);
     }

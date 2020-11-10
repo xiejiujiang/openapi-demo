@@ -109,9 +109,9 @@ public class PayHandler implements EventHandler<PayContent> {
         } catch (Exception e) {
             log.error("支付失败", e);
             return BizResponseBean.builder()
-                    .result_code(PayStatus.PAY_FAIL)
+                    .result_code(PayStatus.PAY_ERROR)
                     .error_code("PAY_ERROR")
-                    .error_message("接口调用失败")
+                    .error_message("长沙银行付款码支付调用失败")
                     .build();
         }
     }

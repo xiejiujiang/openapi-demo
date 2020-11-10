@@ -93,8 +93,11 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
             return bizResponseBean;
         } catch (Exception e) {
             log.error("查询支付订单异常", e);
-            //TODO 内部异常处理
-            return null;
+            return BizResponseBean.builder()
+                    .result_code(PayStatus.PAY_ERROR)
+                    .error_code("PAY_ERROR")
+                    .error_message("长沙银行查询支付订单调用失败")
+                    .build();
         }
     }
 }
