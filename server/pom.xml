@@ -99,7 +99,7 @@
 
     <repositories>
         <repository>
-            <id>central</id>
+            <id>central-aliyun</id>
             <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
@@ -111,7 +111,7 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>central</id>
+            <id>central-aliyun</id>
             <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
