@@ -9,7 +9,15 @@ import java.util.List;
  * @author: zsc
  * @create: 2020/11/5 3:02 下午
  **/
-public interface PayService {
+public interface MerchantService {
+
+    /**
+     * 根据商户ID查询私钥
+     *
+     * @param merchantId
+     * @return
+     */
+    String getPrivateKey(String merchantId);
 
     /**
      * 上传私钥

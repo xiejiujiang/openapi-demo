@@ -31,4 +31,9 @@ public class OrderPayResponse extends CsBankCommonResponse {
      */
     @SerializedName("OrderTime")
     private String orderTime;
+    /**
+     * 订单状态
+     */
+    @SerializedName("OrderStat")
+    private String orderStat;
 }

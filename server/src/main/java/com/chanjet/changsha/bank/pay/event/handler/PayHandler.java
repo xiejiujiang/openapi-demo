@@ -11,9 +11,12 @@ import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.PayContent;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetPayResponse;
+import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
 import com.chanjet.changsha.bank.pay.pojo.OrderPayResponse;
 import com.chanjet.changsha.bank.pay.pojo.PayStatus;
+import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.OrderPay;
+import com.chanjet.changsha.bank.pay.utils.StatusUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,22 +38,23 @@ public class PayHandler implements EventHandler<PayContent> {
     private CsBankCommandBuilder csBankCommandBuilder;
     @Autowired
     private AppConfig appConfig;
+    @Autowired
+    private MerchantService merchantService;
 
     @Override
     public Object execute(ChanjetMsg<PayContent> chanjetMsg) {
         try {
             PayContent payContent = chanjetMsg.getBizContent();
-            Merchant merchant = merchantDao.findMerchantByMerchanId(payContent.getMerchanId());
-            PrivateKey privateKey = privateKeyDao.findById(merchant.getPrivateKeyId()).orElse(new PrivateKey());
+            String privateString = merchantService.getPrivateKey(payContent.getMerchanId());
             OrderPay orderPay = csBankCommandBuilder.create(OrderPay.class);
-            orderPay.setBackUrl("http://17f1bba78b51.ngrok.io/auth/test");
+            orderPay.setBackUrl(appConfig.getBackUrl());
             orderPay.setECustId(payContent.getMerchanId());
             orderPay.setPayMethod("7");
             orderPay.setCardNo(payContent.getAuthCode());
             orderPay.setMerchOrder(payContent.getPayOrderId());
             orderPay.setOrderAmount(payContent.getTotalAmount());
             orderPay.setRemark(payContent.getSubject());
-            orderPay.setPrivateKeyString(privateKey.getPrivateKeyString());
+            orderPay.setPrivateKeyString(privateString);
             OrderPayResponse orderPayResponse = orderPay.excute();
             ChanjetPayResponse chanjetPayResponse;
             BizResponseBean bizResponseBean;
@@ -80,22 +84,24 @@ public class PayHandler implements EventHandler<PayContent> {
                         .build();
                 bizResponseBean = BizResponseBean.builder()
                         .result_code(chanjetPayResponse.getPayStatus())
+                        .error_message(orderPayResponse.getMsg())
                         .data(chanjetPayResponse)
                         .build();
                 //构建失败响应
             } else {
+                ChanjetStatus chanjetStatus = StatusUtils.getChanjetStatus(orderPayResponse.getOrderStat(), orderPayResponse.getMsg());
                 chanjetPayResponse = ChanjetPayResponse.builder()
                         .payType("OPEN")
-                        .payStatus(PayStatus.PAY_FAIL)
+                        .payStatus(chanjetStatus.getResultCode())
                         .payTime(orderPayResponse.getOrderTime())
                         .transactionId(orderPayResponse.getOrderId())
                         .thirdOrderId(orderPayResponse.getOrderId())
                         .openId(orderPayResponse.getThirdUserId())
                         .build();
                 bizResponseBean = BizResponseBean.builder()
-                        .result_code(chanjetPayResponse.getPayStatus())
-                        .error_code("PAY_ERROR")
-                        .error_message(orderPayResponse.getMsg())
+                        .result_code(chanjetStatus.getResultCode())
+                        .error_code(chanjetStatus.getErrorCode())
+                        .error_message(chanjetStatus.getErrorMessage())
                         .data(chanjetPayResponse)
                         .build();
             }

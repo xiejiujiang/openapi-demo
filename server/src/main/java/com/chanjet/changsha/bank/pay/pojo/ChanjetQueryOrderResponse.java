@@ -1,11 +1,17 @@
 package com.chanjet.changsha.bank.pay.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author: zsc
  * @create: 2020/11/9 10:02 上午
  **/
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 public class ChanjetQueryOrderResponse {
     /**

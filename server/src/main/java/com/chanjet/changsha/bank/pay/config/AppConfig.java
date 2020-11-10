@@ -36,4 +36,8 @@ public class AppConfig {
      * 加解密key
      */
     private String encryptKey;
+    /**
+     * 长沙银行支付结果通知地址
+     */
+    private String backUrl;
 }

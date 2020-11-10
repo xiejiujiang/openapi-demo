@@ -1,13 +1,12 @@
 package com.chanjet.changsha.bank.pay.controller;
 
 import com.chanjet.changsha.bank.pay.common.Constants;
+import com.chanjet.changsha.bank.pay.common.MsgType;
 import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.MsgEvent;
-import com.chanjet.changsha.bank.pay.event.content.AppTicketContent;
-import com.chanjet.changsha.bank.pay.event.content.PayContent;
-import com.chanjet.changsha.bank.pay.event.content.TempAuthCodeContent;
+import com.chanjet.changsha.bank.pay.event.content.*;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetEncryptMsg;
 import com.chanjet.changsha.bank.pay.utils.AESUtils;
 import com.chanjet.changsha.bank.pay.utils.SpringUtil;
@@ -16,10 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -76,25 +72,62 @@ public class MessageController {
     private Object execute(String msg, String msgType) {
         Map<String, String> responseMap = new HashMap<>();
         switch (msgType) {
-            case Constants.APP_TICKET:
-                Type appTicketType = new TypeToken<ChanjetMsg<AppTicketContent>>() {}.getType();
+            case MsgType.APP_TICKET:
+                Type appTicketType = new TypeToken<ChanjetMsg<AppTicketContent>>() {
+                }.getType();
                 ChanjetMsg<AppTicketContent> appTicketMsg = new Gson().fromJson(msg, appTicketType);
                 applicationContext.publishEvent(new MsgEvent(applicationContext, appTicketMsg));
                 responseMap.put(Constants.RESULT, Constants.SUCCESS);
                 return responseMap;
-            case Constants.TEMP_AUTH_CODE:
-                Type tempAuthCodeType = new TypeToken<ChanjetMsg<TempAuthCodeContent>>() {}.getType();
+            case MsgType.TEMP_AUTH_CODE:
+                Type tempAuthCodeType = new TypeToken<ChanjetMsg<TempAuthCodeContent>>() {
+                }.getType();
                 ChanjetMsg<TempAuthCodeContent> tempAuthCodeMsg = new Gson().fromJson(msg, tempAuthCodeType);
                 applicationContext.publishEvent(new MsgEvent(applicationContext, tempAuthCodeMsg));
                 responseMap.put(Constants.RESULT, Constants.SUCCESS);
                 return responseMap;
-            case Constants.MICROPAY:
-                Type payContentType = new TypeToken<ChanjetMsg<PayContent>>() {}.getType();
+            case MsgType.MICROPAY:
+                Type payContentType = new TypeToken<ChanjetMsg<PayContent>>() {
+                }.getType();
                 ChanjetMsg<PayContent> payMsg = new Gson().fromJson(msg, payContentType);
                 return SpringUtil.getBean(msgType, EventHandler.class).execute(payMsg);
+            case MsgType.QUERYORDER:
+                Type queryOrderContentType = new TypeToken<ChanjetMsg<QueryOrderContent>>() {
+                }.getType();
+                ChanjetMsg<QueryOrderContent> queryOrderMsg = new Gson().fromJson(msg, queryOrderContentType);
+                return SpringUtil.getBean(msgType, EventHandler.class).execute(queryOrderMsg);
+//            case MsgType.REFUND:
+//                Type payContentType = new TypeToken<ChanjetMsg<PayContent>>() {}.getType();
+//                ChanjetMsg<PayContent> payMsg = new Gson().fromJson(msg, payContentType);
+//                return SpringUtil.getBean(msgType, EventHandler.class).execute(payMsg);
+//            case MsgType.REFUNDQUERY:
+//                Type payContentType = new TypeToken<ChanjetMsg<PayContent>>() {}.getType();
+//                ChanjetMsg<PayContent> payMsg = new Gson().fromJson(msg, payContentType);
+//                return SpringUtil.getBean(msgType, EventHandler.class).execute(payMsg);
+            case MsgType.REVERSEORDER:
+                Type reverseOrderType = new TypeToken<ChanjetMsg<ReverseOrderContent>>() {
+                }.getType();
+                ChanjetMsg<ReverseOrderContent> reverseOrderMsg = new Gson().fromJson(msg, reverseOrderType);
+                return SpringUtil.getBean(msgType, EventHandler.class).execute(reverseOrderMsg);
+//            case MsgType.GETBILLINFO:
+//                Type payContentType = new TypeToken<ChanjetMsg<PayContent>>() {}.getType();
+//                ChanjetMsg<PayContent> payMsg = new Gson().fromJson(msg, payContentType);
+//                return SpringUtil.getBean(msgType, EventHandler.class).execute(payMsg);
             default:
                 responseMap.put(Constants.RESULT, Constants.SUCCESS);
                 return responseMap;
         }
+    }
+
+    /**
+     * 模拟前端页面获取cookie
+     *
+     * @param body
+     * @return
+     */
+    @RequestMapping("test")
+    public String test(@RequestBody String body) {
+        System.out.println("长沙银行回调信息:" + body);
+        return "00000000";
     }
 }
