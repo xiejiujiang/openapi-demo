@@ -1,6 +1,8 @@
 package com.chanjet.changsha.bank.pay.service;
 
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
+import com.chanjet.changsha.bank.pay.entity.PrivateKey;
+import com.chanjet.changsha.bank.pay.entity.PublicKey;
 
 import java.io.File;
 import java.util.List;
@@ -10,9 +12,8 @@ import java.util.List;
  * @create: 2020/11/5 3:02 下午
  **/
 public interface MerchantService {
-
     /**
-     * 根据商户ID查询私钥
+     * 根据商户ID获取私钥字符串
      *
      * @param merchantId
      * @return
@@ -26,7 +27,7 @@ public interface MerchantService {
      * @param password
      * @return
      */
-    Long uploadPrivateKey(File file, String password);
+    PrivateKey uploadPrivateKey(File file, String password);
 
     /**
      * 上传公钥
@@ -34,7 +35,7 @@ public interface MerchantService {
      * @param file
      * @return
      */
-    Long uploadPublicKey(File file);
+    PublicKey uploadPublicKey(File file);
 
     /**
      * 根据ID查询商户信息

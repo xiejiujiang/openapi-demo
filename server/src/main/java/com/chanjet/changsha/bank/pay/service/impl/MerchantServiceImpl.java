@@ -5,6 +5,7 @@ import com.chanjet.changsha.bank.pay.dao.PrivateKeyDao;
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
 import com.chanjet.changsha.bank.pay.entity.Merchant;
 import com.chanjet.changsha.bank.pay.entity.PrivateKey;
+import com.chanjet.changsha.bank.pay.entity.PublicKey;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,12 +32,12 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public Long uploadPrivateKey(File file, String password) {
+    public PrivateKey uploadPrivateKey(File file, String password) {
         return null;
     }
 
     @Override
-    public Long uploadPublicKey(File file) {
+    public PublicKey uploadPublicKey(File file) {
         return null;
     }
 
@@ -64,4 +65,5 @@ public class MerchantServiceImpl implements MerchantService {
     public MerchantDto delete(Long id) {
         return null;
     }
+
 }

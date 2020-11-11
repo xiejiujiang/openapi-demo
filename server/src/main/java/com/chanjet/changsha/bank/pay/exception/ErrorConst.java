@@ -7,7 +7,9 @@ package com.chanjet.changsha.bank.pay.exception;
  * @create: 2020-02-12 09:17
  **/
 public enum ErrorConst {
-    INTENAL_ERROR(500, "系统内部异常");
+    INTENAL_ERROR(500, "系统内部异常"),
+    NO_TOKEN(401, "用户非法")
+    ;
 
     private int code;
     private String message;

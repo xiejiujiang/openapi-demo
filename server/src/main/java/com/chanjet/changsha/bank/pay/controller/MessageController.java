@@ -1,5 +1,6 @@
 package com.chanjet.changsha.bank.pay.controller;
 
+import com.chanjet.changsha.bank.pay.annotation.ApiRestController;
 import com.chanjet.changsha.bank.pay.common.Constants;
 import com.chanjet.changsha.bank.pay.common.MsgType;
 import com.chanjet.changsha.bank.pay.config.AppConfig;
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author: zsc
  * @create: 2020/11/5 4:57 下午
  **/
+@ApiRestController
 @Slf4j
 @RestController
 @RequestMapping("message")

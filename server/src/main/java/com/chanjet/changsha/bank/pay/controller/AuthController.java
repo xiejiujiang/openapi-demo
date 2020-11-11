@@ -1,5 +1,6 @@
 package com.chanjet.changsha.bank.pay.controller;
 
+import com.chanjet.changsha.bank.pay.annotation.ApiRestController;
 import com.chanjet.changsha.bank.pay.entity.User;
 import com.chanjet.changsha.bank.pay.service.AuthService;
 import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
@@ -14,6 +15,7 @@ import java.io.IOException;
  * @author: zsc
  * @create: 2020/11/5 3:05 下午
  **/
+@ApiRestController
 @RestController
 @RequestMapping("auth")
 public class AuthController {
