@@ -4,6 +4,8 @@ import com.chanjet.changsha.bank.pay.command.AbstractValueResultApiCommand;
 import com.chanjet.changsha.bank.pay.command.builder.SpiBuilder;
 import com.chanjet.changsha.bank.pay.pojo.OrderCancelResponse;
 import com.chanjet.changsha.bank.pay.utils.SignUtil;
+import lombok.Getter;
+import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -16,6 +18,8 @@ import java.util.Map;
  * @author: zsc
  * @create: 2020/11/9 9:28 上午
  **/
+@Getter
+@Setter
 public class OrderCancel extends AbstractValueResultApiCommand<OrderCancelResponse> {
     /**
      * 订单ID

@@ -27,6 +27,10 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
      * 订单编号
      */
     private String orderId;
+    /**
+     * 商户退款流水号
+     */
+    private String rePaymentSn;
 
     public QueryRefundOrder(SpiBuilder spiBuilder) {
         super(spiBuilder);
@@ -40,9 +44,11 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
         paramMap.put("ECustId", this.eCustId);
         paramMap.put("Service_version", this.serviceVersion);
         paramMap.put("OrderId", this.orderId);
+        paramMap.put("RePaymentSn", this.rePaymentSn);
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
         return this.getSpiBuilder().create(QueryRefundOrder.Spi.class).queryRefundOrder(
                 this.orderId,
+                this.rePaymentSn,
                 this.eCustId,
                 this.serviceVersion,
                 sign
@@ -55,6 +61,7 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
         @POST("/directBank/paygate/h5/thirdpartyQueryRefundOrder.do")
         Call<QueryRefundOrderResponse> queryRefundOrder(
                 @Field("OrderId") String orderId,
+                @Field("RePaymentSn") String rePaymentSn,
                 @Field("ECustId") String eCustId,
                 @Field("Service_version") String serviceVersion,
                 @Field("Sign") String sign

@@ -23,5 +23,6 @@ app:
     appSecret: 6C901AFCA78DEC78FCD67D7EA8DC9C0B
     #加解密key
     encryptKey: 9876543210987654
+    backUrl: https://inte-csbank-pay.chanapp.chanjet.com/message/test
 
 

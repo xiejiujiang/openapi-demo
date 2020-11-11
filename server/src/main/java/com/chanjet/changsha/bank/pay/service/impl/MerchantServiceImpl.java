@@ -1,7 +1,12 @@
 package com.chanjet.changsha.bank.pay.service.impl;
 
+import com.chanjet.changsha.bank.pay.dao.MerchantDao;
+import com.chanjet.changsha.bank.pay.dao.PrivateKeyDao;
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
-import com.chanjet.changsha.bank.pay.service.PayService;
+import com.chanjet.changsha.bank.pay.entity.Merchant;
+import com.chanjet.changsha.bank.pay.entity.PrivateKey;
+import com.chanjet.changsha.bank.pay.service.MerchantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -12,7 +17,18 @@ import java.util.List;
  * @create: 2020/11/5 4:56 下午
  **/
 @Service
-public class PayServiceImpl implements PayService {
+public class MerchantServiceImpl implements MerchantService {
+    @Autowired
+    private MerchantDao merchantDao;
+    @Autowired
+    private PrivateKeyDao privateKeyDao;
+
+    @Override
+    public String getPrivateKey(String merchantId) {
+        Merchant merchant = merchantDao.findMerchantByMerchanId(merchantId);
+        PrivateKey privateKey = privateKeyDao.findById(merchant.getPrivateKeyId()).orElse(new PrivateKey());
+        return privateKey.getPrivateKeyString();
+    }
 
     @Override
     public Long uploadPrivateKey(File file, String password) {

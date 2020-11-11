@@ -2,6 +2,7 @@ package com.chanjet.changsha.bank.pay.pojo;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 付款码支付响应
@@ -9,6 +10,7 @@ import lombok.Data;
  * @author: zsc
  * @create: 2020/11/5 2:13 下午
  **/
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OrderPayResponse extends CsBankCommonResponse {
     /**
@@ -31,4 +33,9 @@ public class OrderPayResponse extends CsBankCommonResponse {
      */
     @SerializedName("OrderTime")
     private String orderTime;
+    /**
+     * 订单状态
+     */
+    @SerializedName("OrderStat")
+    private String orderStat;
 }
