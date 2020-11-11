@@ -41,6 +41,10 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
      * 商户退款流水号
      */
     private String eRefundSn;
+    /**
+     * 员工ID
+     */
+    private String staffId;
 
     public RequestRefund(SpiBuilder spiBuilder) {
         super(spiBuilder);
@@ -57,12 +61,14 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
         paramMap.put("CancelReason", this.cancelReason);
         paramMap.put("RefundAmount", this.refundAmount);
         paramMap.put("ERefundSn", this.eRefundSn);
+        paramMap.put("StaffId", this.staffId);
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
         return this.getSpiBuilder().create(RequestRefund.Spi.class).requestRefund(
                 this.orderId,
                 this.cancelReason,
                 this.refundAmount,
                 this.eRefundSn,
+                this.staffId,
                 this.eCustId,
                 this.serviceVersion,
                 sign
@@ -78,16 +84,11 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
                 @Field("CancelReason") String cancelReason,
                 @Field("RefundAmount") String refundAmount,
                 @Field("ERefundSn") String eRefundSn,
+                @Field("StaffId") String staffId,
                 @Field("ECustId") String eCustId,
                 @Field("Service_version") String serviceVersion,
                 @Field("Sign") String sign
         );
-    }
-
-    public static void main(String[] args) {
-        System.out.println(URLEncoder.encode("code=38388807bd9a422e8741d307506fb403&grant_type=authorization_code&app_key=t6avXpks&redirect_uri=https://passport.utax360.cn/uauthentication/chanjet/gotoapp"));
-        System.out.println(URLDecoder.decode("https://sandbox-market.chanjet.com/api/sso/action?loginKey=fda256999766466d811309a3393ff499&state=%7B%22bookCode%22%3A%225tpqal2rf7%22%2C%22pageHash%22%3A%22%22%2C%22isWorkbench%22%3Atrue%7D"));
-        System.out.println(URLEncoder.encode("https://sandbox-market.chanjet.com/api/sso/action?loginKey=fda256999766466d811309a3393ff499&state={\"bookCode\":\"5tpqal2rf7\"}"));
     }
 }
 

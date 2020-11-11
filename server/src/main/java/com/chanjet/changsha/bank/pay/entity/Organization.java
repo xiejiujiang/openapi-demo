@@ -24,6 +24,7 @@ public class Organization extends AbstractBaseEntity<Long> {
     /**
      * 企业ID
      */
+    @Column(nullable = false, unique = true)
     private String orgId;
     /**
      * 企业永久授权码

@@ -33,7 +33,7 @@ public class User extends AbstractBaseEntity<Long> {
     /**
      * 用户token
      */
-    @Column(nullable = false, length = 2048)
+    @Column(nullable = false, unique = true, length = 2048)
     private String token;
     /**
      * 用户永久授权码

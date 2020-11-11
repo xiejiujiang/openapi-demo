@@ -1,4 +1,4 @@
-package com.chanjet.changsha.bank.pay.pojo;
+package com.chanjet.changsha.bank.pay.common;
 
 /**
  * @author: zsc

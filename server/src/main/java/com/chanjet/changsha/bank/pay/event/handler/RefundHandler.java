@@ -2,9 +2,11 @@ package com.chanjet.changsha.bank.pay.event.handler;
 
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.common.BizResponseBean;
+import com.chanjet.changsha.bank.pay.common.RefundStatus;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.RefundContent;
+import com.chanjet.changsha.bank.pay.pojo.ChanjetRefundResponse;
 import com.chanjet.changsha.bank.pay.pojo.RequestRefundResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.RequestRefund;
@@ -32,18 +34,39 @@ public class RefundHandler implements EventHandler<RefundContent> {
             String merchanId = refundContent.getMerchanId();
             String privateKeyString = merchantService.getPrivateKey(merchanId);
             RequestRefund requestRefund = csBankCommandBuilder.create(RequestRefund.class);
-//            requestRefund.setECustId();
-//            requestRefund.setCancelReason();
-//            requestRefund.setERefundSn();
-//            requestRefund.setOrderId();
-//            requestRefund.setRefundAmount();
+            requestRefund.setECustId(merchanId);
+            requestRefund.setERefundSn(refundContent.getThirdOrderId());
+            requestRefund.setOrderId(refundContent.getPayOrderId());
+            requestRefund.setRefundAmount(refundContent.getRefundAmount());
+            requestRefund.setStaffId(refundContent.getOperator());
             requestRefund.setPrivateKeyString(privateKeyString);
             RequestRefundResponse requestRefundResponse = requestRefund.excute();
-            return null;
+            String status = requestRefundResponse.getStatus();
+            ChanjetRefundResponse chanjetRefundResponse;
+            BizResponseBean bizResponseBean;
+            if ("0000".equals(status)) {
+                chanjetRefundResponse = ChanjetRefundResponse.builder()
+                        .refundStatus(RefundStatus.REFUNDED_INPROGRESS)
+                        .build();
+                bizResponseBean = BizResponseBean.builder()
+                        .result_code(RefundStatus.REFUNDED_INPROGRESS)
+                        .data(chanjetRefundResponse)
+                        .build();
+            } else {
+                chanjetRefundResponse = ChanjetRefundResponse.builder()
+                        .refundStatus(RefundStatus.REFUNDED_FAIL)
+                        .build();
+                bizResponseBean = BizResponseBean.builder()
+                        .result_code(RefundStatus.REFUNDED_FAIL)
+                        .error_message(requestRefundResponse.getMsg())
+                        .data(chanjetRefundResponse)
+                        .build();
+            }
+            return bizResponseBean;
         } catch (Exception e) {
             log.error("退款错误", e);
             return BizResponseBean.builder()
-                    .result_code("REFUNDED_ERROR")
+                    .result_code(RefundStatus.REFUNDED_ERROR)
                     .error_message("长沙银行退款调用失败")
                     .build();
         }

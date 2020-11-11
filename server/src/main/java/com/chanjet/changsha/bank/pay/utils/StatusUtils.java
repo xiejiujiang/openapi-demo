@@ -2,7 +2,7 @@ package com.chanjet.changsha.bank.pay.utils;
 
 import com.chanjet.changsha.bank.pay.common.OrderStat;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
-import com.chanjet.changsha.bank.pay.pojo.PayStatus;
+import com.chanjet.changsha.bank.pay.common.PayStatus;
 
 /**
  * 状态码工具类，用于做长沙银行和畅捷通的错误码转换

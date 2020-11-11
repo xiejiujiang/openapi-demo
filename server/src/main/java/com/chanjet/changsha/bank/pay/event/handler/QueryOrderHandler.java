@@ -7,7 +7,7 @@ import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.QueryOrderContent;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetQueryOrderResponse;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
-import com.chanjet.changsha.bank.pay.pojo.PayStatus;
+import com.chanjet.changsha.bank.pay.common.PayStatus;
 import com.chanjet.changsha.bank.pay.pojo.QueryOrderResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.QueryOrder;
