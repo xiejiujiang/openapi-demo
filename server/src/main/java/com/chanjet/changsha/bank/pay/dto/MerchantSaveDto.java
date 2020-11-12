@@ -1,24 +1,23 @@
 package com.chanjet.changsha.bank.pay.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import javax.persistence.*;
 
 /**
+ * 商户信息
+ *
  * @author: zsc
- * @create: 2020/11/9 2:17 下午
+ * @create: 2020/11/6 1:40 下午
  **/
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class MerchantDto {
-    private Long id;
-    /**
-     * 企业ID
-     */
-    private String orgId;
+public class MerchantSaveDto {
+
+
     /**
      * 账套ID
      */
@@ -40,11 +39,11 @@ public class MerchantDto {
      */
     private String name;
     /**
-     * 私钥文件名称
+     * 私钥的id
      */
-    private String privateKeyFileName;
+    private Long privateKeyId;
     /**
-     * 公钥的名称
+     * 公钥的id
      */
-    private String publicKeyFileName;
+    private Long publicKeyId;
 }

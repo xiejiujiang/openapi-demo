@@ -136,7 +136,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    FindByEnterpriseIdResponse findByEnterpriseId(String openToken, String queryType) throws ChanjetApiException {
+    public FindByEnterpriseIdResponse findByEnterpriseId(String openToken, String queryType) throws ChanjetApiException {
         FindByEnterpriseIdRequest findByEnterpriseIdRequest = new FindByEnterpriseIdRequest();
         findByEnterpriseIdRequest.setAppKey(appConfig.getAppKey());
         findByEnterpriseIdRequest.setAppSecret(appConfig.getAppSecret());
@@ -171,7 +171,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    PushMerchantResponse pushMerchant(String openToken, PushMerchantContent pushMerchantContent) throws ChanjetApiException {
+   public PushMerchantResponse pushMerchant(String openToken, PushMerchantContent pushMerchantContent) throws ChanjetApiException {
         PushMerchantRequest pushMerchantRequest = new PushMerchantRequest();
         pushMerchantRequest.setAppKey(appConfig.getAppKey());
         pushMerchantRequest.setAppSecret(appConfig.getAppSecret());

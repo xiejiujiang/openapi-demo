@@ -1,8 +1,8 @@
 package com.chanjet.changsha.bank.pay.pojo;
 
+import com.chanjet.changsha.bank.pay.entity.Merchant;
 import com.chanjet.openapi.sdk.java.AbstractChanjetContent;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * @author zsc
@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PushMerchantContent extends AbstractChanjetContent {
     /**
      * 企业ID
@@ -47,4 +50,19 @@ public class PushMerchantContent extends AbstractChanjetContent {
      * 支付服务提供者名称
      */
     private String serviceName;
+
+
+    public static PushMerchantContent getInstance(Merchant merchant,String appKey){
+       return PushMerchantContent.builder()
+                .orgId(merchant.getOrgId())
+                .fieldId(merchant.getBookId())
+                .merchanId(merchant.getMerchanId())
+                .name(merchant.getName())
+                .type("OPEN")
+                .bankName(merchant.getBankName())
+                .accountName(merchant.getAccountName())
+                .serviceName("长沙银行")
+                .appKey(appKey)
+                .build();
+    }
 }
