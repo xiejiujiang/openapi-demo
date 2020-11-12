@@ -28,6 +28,6 @@ app:
     #Oauth重定向地址
     redirectUri: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
     #前端url
-    frontUrl: http://3810a707ed7f.ngrok.io/api/auth/test
+    frontUrl: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/test
 
 
