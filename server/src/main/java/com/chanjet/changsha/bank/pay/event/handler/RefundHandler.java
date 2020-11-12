@@ -40,6 +40,7 @@ public class RefundHandler implements EventHandler<RefundContent> {
             requestRefund.setOrderId(refundContent.getPayOrderId());
             requestRefund.setRefundAmount(refundContent.getRefundAmount());
             requestRefund.setStaffId(refundContent.getOperator());
+            requestRefund.setERefundSn(refundContent.getRefundOrderId());
             requestRefund.setPrivateKeyString(privateKeyString);
             RequestRefundResponse requestRefundResponse = requestRefund.excute();
             String status = requestRefundResponse.getStatus();

@@ -46,11 +46,12 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
             ChanjetQueryOrderResponse chanjetQueryOrderResponse;
             BizResponseBean bizResponseBean;
             if ("0000".equals(queryOrderResponse.getStatus())) {
+                ChanjetStatus chanjetStatus = StatusUtils.getPayStatus(queryOrderResponse.getOrderStat(), queryOrderResponse.getMsg());
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
                         .payTime(DateUtil.getDate())
                         .transactionId(queryOrderResponse.getOrderId())
                         .payType("OPEN")
-                        .payStatus(PayStatus.PAY_COMPLETE)
+                        .payStatus(chanjetStatus.getResultCode())
                         .openId(queryOrderResponse.getThirdUserId())
                         .thirdOrderId(queryOrderResponse.getOrderId())
                         .build();
@@ -75,18 +76,12 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
                         .build();
                 //构建失败响应
             } else {
-                ChanjetStatus chanjetStatus = StatusUtils.getChanjetStatus(queryOrderResponse.getOrderStat(), queryOrderResponse.getMsg());
+                ChanjetStatus chanjetStatus = StatusUtils.getPayStatus(queryOrderResponse.getOrderStat(), queryOrderResponse.getMsg());
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
-                        .payType("OPEN")
                         .payStatus(chanjetStatus.getResultCode())
-                        .payTime(DateUtil.getDate())
-                        .transactionId(queryOrderResponse.getOrderId())
-                        .thirdOrderId(queryOrderResponse.getOrderId())
-                        .openId(queryOrderResponse.getThirdUserId())
                         .build();
                 bizResponseBean = BizResponseBean.builder()
                         .result_code(chanjetStatus.getResultCode())
-                        .error_code(chanjetStatus.getErrorCode())
                         .error_message(chanjetStatus.getErrorMessage())
                         .data(chanjetQueryOrderResponse)
                         .build();

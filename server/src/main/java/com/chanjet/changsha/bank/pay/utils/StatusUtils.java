@@ -1,6 +1,7 @@
 package com.chanjet.changsha.bank.pay.utils;
 
 import com.chanjet.changsha.bank.pay.common.OrderStat;
+import com.chanjet.changsha.bank.pay.common.RefundStatus;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
 import com.chanjet.changsha.bank.pay.common.PayStatus;
 
@@ -12,7 +13,7 @@ import com.chanjet.changsha.bank.pay.common.PayStatus;
  **/
 public class StatusUtils {
 
-    public static ChanjetStatus getChanjetStatus(String orderStat, String msg) {
+    public static ChanjetStatus getPayStatus(String orderStat, String msg) {
         switch (orderStat) {
             case OrderStat.ACCEPTED:
                 return new ChanjetStatus(PayStatus.PAY_PAYMENT, "", msg);
@@ -45,7 +46,23 @@ public class StatusUtils {
             case OrderStat.CLOSED:
                 return new ChanjetStatus(PayStatus.PAY_CLOSE, "", msg);
             default:
-                return new ChanjetStatus(PayStatus.PAY_FAIL, "PAY_ERROR", msg);
+                return new ChanjetStatus(PayStatus.PAY_ERROR, "PAY_ERROR", msg);
+        }
+    }
+
+
+    public static ChanjetStatus getRefundStatus(String orderStat, String msg) {
+        switch (orderStat) {
+            case OrderStat.REFUND_SUCCESSFULLY:
+                return new ChanjetStatus(RefundStatus.REFUNDED_COMPLETE, "", msg);
+            case OrderStat.REFUND_EXECUTION:
+                return new ChanjetStatus(RefundStatus.REFUNDED_INPROGRESS, "", msg);
+            case OrderStat.REFUND_FAILED:
+                return new ChanjetStatus(RefundStatus.REFUNDED_FAIL, "", msg);
+            case OrderStat.SUSPICIOUS_REFUND:
+                return new ChanjetStatus(RefundStatus.REFUNDED_ERROR, "", msg);
+            default:
+                return new ChanjetStatus(RefundStatus.REFUNDED_ERROR, "", msg);
         }
     }
 

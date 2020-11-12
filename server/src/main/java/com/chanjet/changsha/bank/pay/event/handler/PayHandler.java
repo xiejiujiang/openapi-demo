@@ -92,7 +92,7 @@ public class PayHandler implements EventHandler<PayContent> {
                         .build();
                 //构建失败响应
             } else {
-                ChanjetStatus chanjetStatus = StatusUtils.getChanjetStatus(orderPayResponse.getOrderStat(), orderPayResponse.getMsg());
+                ChanjetStatus chanjetStatus = StatusUtils.getPayStatus(orderPayResponse.getOrderStat(), orderPayResponse.getMsg());
                 chanjetPayResponse = ChanjetPayResponse.builder()
                         .payType("OPEN")
                         .payStatus(chanjetStatus.getResultCode())
