@@ -8,4 +8,20 @@ import lombok.Data;
  **/
 @Data
 public class QueryRefundOrderContent {
+    /**
+     * 支付订单号
+     */
+    private String payOrderId;
+    /**
+     * 退款订单号
+     */
+    private String refundOrderId;
+    /**
+     * 商户号
+     */
+    private String merchanId;
+    /**
+     * 第三方订单号
+     */
+    private String thirdOrderId;
 }

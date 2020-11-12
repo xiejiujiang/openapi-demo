@@ -41,6 +41,10 @@ public class PayContent {
      * 入网之后的商户ID
      */
     private String merchanId;
+    /**
+     * 支付方式
+     */
+    private String payMethod;
 
     public static void main(String[] args) throws Exception {
         ChanjetMsg<PayContent> chanjetMsg = new ChanjetMsg<>();

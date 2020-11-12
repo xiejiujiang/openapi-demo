@@ -14,4 +14,8 @@ public class ChanjetRefundResponse {
      * 退款状态
      */
     private String refundStatus;
+    /**
+     * 退款时间
+     */
+    private String refundTime;
 }

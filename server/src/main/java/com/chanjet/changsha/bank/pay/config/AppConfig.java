@@ -40,4 +40,12 @@ public class AppConfig {
      * 长沙银行支付结果通知地址
      */
     private String backUrl;
+    /**
+     * OAuth重定向地址
+     */
+    private String redirectUri;
+    /**
+     * 前端地址
+     */
+    private String frontUrl;
 }

@@ -2,18 +2,17 @@ package com.chanjet.changsha.bank.pay.event.handler;
 
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.common.BizResponseBean;
+import com.chanjet.changsha.bank.pay.common.PayStatus;
 import com.chanjet.changsha.bank.pay.config.AppConfig;
-import com.chanjet.changsha.bank.pay.dao.MerchantDao;
-import com.chanjet.changsha.bank.pay.dao.PrivateKeyDao;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.PayContent;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetPayResponse;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
 import com.chanjet.changsha.bank.pay.pojo.OrderPayResponse;
-import com.chanjet.changsha.bank.pay.common.PayStatus;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.OrderPay;
+import com.chanjet.changsha.bank.pay.utils.DateUtil;
 import com.chanjet.changsha.bank.pay.utils.StatusUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +28,6 @@ import org.springframework.stereotype.Component;
 @Component("MICROPAY")
 public class PayHandler implements EventHandler<PayContent> {
     @Autowired
-    private MerchantDao merchantDao;
-    @Autowired
-    private PrivateKeyDao privateKeyDao;
-    @Autowired
     private CsBankCommandBuilder csBankCommandBuilder;
     @Autowired
     private AppConfig appConfig;
@@ -43,11 +38,21 @@ public class PayHandler implements EventHandler<PayContent> {
     public Object execute(ChanjetMsg<PayContent> chanjetMsg) {
         try {
             PayContent payContent = chanjetMsg.getBizContent();
+            String payMethod = payContent.getPayMethod();
+            if ("2".equals(payMethod)) {
+                payMethod = "5";
+            } else if ("4".equals(payMethod)) {
+                return BizResponseBean.builder()
+                        .result_code(PayStatus.PAY_ERROR)
+                        .error_code("PAY_ERROR")
+                        .error_message("不支持的支付方式")
+                        .build();
+            }
             String privateString = merchantService.getPrivateKey(payContent.getMerchanId());
             OrderPay orderPay = csBankCommandBuilder.create(OrderPay.class);
             orderPay.setBackUrl(appConfig.getBackUrl());
             orderPay.setECustId(payContent.getMerchanId());
-            orderPay.setPayMethod("7");
+            orderPay.setPayMethod(payMethod);
             orderPay.setCardNo(payContent.getAuthCode());
             orderPay.setMerchOrder(payContent.getPayOrderId());
             orderPay.setOrderAmount(payContent.getTotalAmount());
@@ -59,7 +64,7 @@ public class PayHandler implements EventHandler<PayContent> {
             //构建成功响应
             if ("0000".equals(orderPayResponse.getStatus())) {
                 chanjetPayResponse = ChanjetPayResponse.builder()
-                        .payTime(orderPayResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(orderPayResponse.getOrderId())
                         .payType("OPEN")
                         .payStatus(PayStatus.PAY_COMPLETE)
@@ -73,7 +78,7 @@ public class PayHandler implements EventHandler<PayContent> {
                 //构建待支付响应
             } else if ("0008".equals(orderPayResponse.getStatus())) {
                 chanjetPayResponse = ChanjetPayResponse.builder()
-                        .payTime(orderPayResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(orderPayResponse.getOrderId())
                         .payType("OPEN")
                         .payStatus(PayStatus.PAY_PAYMENT)
@@ -91,7 +96,7 @@ public class PayHandler implements EventHandler<PayContent> {
                 chanjetPayResponse = ChanjetPayResponse.builder()
                         .payType("OPEN")
                         .payStatus(chanjetStatus.getResultCode())
-                        .payTime(orderPayResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(orderPayResponse.getOrderId())
                         .thirdOrderId(orderPayResponse.getOrderId())
                         .openId(orderPayResponse.getThirdUserId())

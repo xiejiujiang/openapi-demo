@@ -10,6 +10,7 @@ import com.chanjet.changsha.bank.pay.pojo.ChanjetRefundResponse;
 import com.chanjet.changsha.bank.pay.pojo.RequestRefundResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.RequestRefund;
+import com.chanjet.changsha.bank.pay.utils.DateUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,7 @@ public class RefundHandler implements EventHandler<RefundContent> {
             if ("0000".equals(status)) {
                 chanjetRefundResponse = ChanjetRefundResponse.builder()
                         .refundStatus(RefundStatus.REFUNDED_INPROGRESS)
+                        .refundTime(DateUtil.getDate())
                         .build();
                 bizResponseBean = BizResponseBean.builder()
                         .result_code(RefundStatus.REFUNDED_INPROGRESS)

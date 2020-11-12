@@ -9,15 +9,19 @@ import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.MsgEvent;
 import com.chanjet.changsha.bank.pay.event.content.*;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetEncryptMsg;
+import com.chanjet.changsha.bank.pay.pojo.PayResult;
+import com.chanjet.changsha.bank.pay.service.MessageService;
 import com.chanjet.changsha.bank.pay.utils.AESUtils;
 import com.chanjet.changsha.bank.pay.utils.SpringUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -38,6 +42,8 @@ public class MessageController {
     ApplicationContext applicationContext;
     @Autowired
     private AppConfig appConfig;
+    @Autowired
+    private MessageService messageService;
 
     @PostMapping("/chanjet/receive")
     public Object receive(@RequestBody ChanjetEncryptMsg chanjetEncryptMsg) {
@@ -123,12 +129,13 @@ public class MessageController {
     /**
      * 模拟前端页面获取cookie
      *
-     * @param body
+     * @param payResult
      * @return
      */
     @PostMapping("/changsha/receive")
-    public String test(@RequestBody String body) {
-        log.error("长沙银行发送的消息：");
+    public String receive(PayResult payResult) {
+        log.error("长沙银行发送的消息{}", payResult);
+        messageService.changshaReceive(payResult);
         return "00000000";
     }
 }

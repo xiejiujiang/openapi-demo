@@ -11,6 +11,7 @@ import com.chanjet.changsha.bank.pay.common.PayStatus;
 import com.chanjet.changsha.bank.pay.pojo.QueryOrderResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.QueryOrder;
+import com.chanjet.changsha.bank.pay.utils.DateUtil;
 import com.chanjet.changsha.bank.pay.utils.StatusUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
             BizResponseBean bizResponseBean;
             if ("0000".equals(queryOrderResponse.getStatus())) {
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
-                        .payTime(queryOrderResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(queryOrderResponse.getOrderId())
                         .payType("OPEN")
                         .payStatus(PayStatus.PAY_COMPLETE)
@@ -60,7 +61,7 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
                 //构建待支付响应
             } else if ("0008".equals(queryOrderResponse.getStatus())) {
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
-                        .payTime(queryOrderResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(queryOrderResponse.getOrderId())
                         .payType("OPEN")
                         .payStatus(PayStatus.PAY_PAYMENT)
@@ -78,7 +79,7 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
                         .payType("OPEN")
                         .payStatus(chanjetStatus.getResultCode())
-                        .payTime(queryOrderResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(queryOrderResponse.getOrderId())
                         .thirdOrderId(queryOrderResponse.getOrderId())
                         .openId(queryOrderResponse.getThirdUserId())

@@ -102,7 +102,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    GetTokenByPermanentCodeResponse getTokenByPermanentCode(GetTokenByPermanentCodeContent getTokenByPermanentCodeContent) throws ChanjetApiException {
+    public GetTokenByPermanentCodeResponse getTokenByPermanentCode(GetTokenByPermanentCodeContent getTokenByPermanentCodeContent) throws ChanjetApiException {
         GetTokenByPermanentCodeRequest getTokenByPermanentCodeRequest = new GetTokenByPermanentCodeRequest();
         getTokenByPermanentCodeRequest.setAppKey(appConfig.getAppKey());
         getTokenByPermanentCodeRequest.setAppSecret(appConfig.getAppSecret());
@@ -118,7 +118,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    UserResponse user(String openToken) throws ChanjetApiException {
+    public UserResponse user(String openToken) throws ChanjetApiException {
         UserRequest userRequest = new UserRequest();
         userRequest.setAppKey(appConfig.getAppKey());
         userRequest.setAppSecret(appConfig.getAppSecret());
@@ -136,7 +136,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    FindByEnterpriseIdResponse findByEnterpriseId(String openToken, String queryType) throws ChanjetApiException {
+    public FindByEnterpriseIdResponse findByEnterpriseId(String openToken, String queryType) throws ChanjetApiException {
         FindByEnterpriseIdRequest findByEnterpriseIdRequest = new FindByEnterpriseIdRequest();
         findByEnterpriseIdRequest.setAppKey(appConfig.getAppKey());
         findByEnterpriseIdRequest.setAppSecret(appConfig.getAppSecret());
@@ -154,7 +154,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    PushOrderInfoResponse pushOrderInfo(PushOrderInfoContent pushOrderInfoContent) throws ChanjetApiException {
+    public PushOrderInfoResponse pushOrderInfo(PushOrderInfoContent pushOrderInfoContent) throws ChanjetApiException {
         PushOrderInfoRequest pushOrderInfoRequest = new PushOrderInfoRequest();
         pushOrderInfoRequest.setAppKey(appConfig.getAppKey());
         pushOrderInfoRequest.setAppSecret(appConfig.getAppSecret());
@@ -171,7 +171,7 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    PushMerchantResponse pushMerchant(String openToken, PushMerchantContent pushMerchantContent) throws ChanjetApiException {
+    public PushMerchantResponse pushMerchant(String openToken, PushMerchantContent pushMerchantContent) throws ChanjetApiException {
         PushMerchantRequest pushMerchantRequest = new PushMerchantRequest();
         pushMerchantRequest.setAppKey(appConfig.getAppKey());
         pushMerchantRequest.setAppSecret(appConfig.getAppSecret());
