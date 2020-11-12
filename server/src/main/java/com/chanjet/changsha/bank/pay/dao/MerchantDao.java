@@ -1,6 +1,8 @@
 package com.chanjet.changsha.bank.pay.dao;
 
 import com.chanjet.changsha.bank.pay.entity.Merchant;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MerchantDao extends JpaRepository<Merchant, Long> {
     Merchant findMerchantByMerchanId(String merchanId);
+
+    Page<Merchant> findMerchantsByOrgId(String orgId, Pageable pageable);
 }

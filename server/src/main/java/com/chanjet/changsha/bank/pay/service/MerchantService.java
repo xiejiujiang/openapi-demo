@@ -1,8 +1,12 @@
 package com.chanjet.changsha.bank.pay.service;
 
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
+import com.chanjet.changsha.bank.pay.dto.MerchantSaveDto;
+import com.chanjet.changsha.bank.pay.entity.BookEntity;
+import com.chanjet.changsha.bank.pay.entity.Page;
 import com.chanjet.changsha.bank.pay.entity.PrivateKey;
 import com.chanjet.changsha.bank.pay.entity.PublicKey;
+import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
 
 import java.io.File;
 import java.util.List;
@@ -27,7 +31,7 @@ public interface MerchantService {
      * @param password
      * @return
      */
-    PrivateKey uploadPrivateKey(File file, String password);
+    PrivateKey uploadPrivateKey(File file, String password,String merchantId);
 
     /**
      * 上传公钥
@@ -47,11 +51,12 @@ public interface MerchantService {
 
     /**
      * 查询商户列表
-     *
-     * @param userId
+     * @param token
+     * @param size
+     * @param page
      * @return
      */
-    List<MerchantDto> list(String userId);
+    Page<MerchantDto> list(String token, int size, int page);
 
     /**
      * 添加商户
@@ -59,7 +64,7 @@ public interface MerchantService {
      * @param merchantDto
      * @return
      */
-    MerchantDto add(MerchantDto merchantDto);
+    boolean add(String token,MerchantSaveDto merchantDto) throws ChanjetApiException;
 
     /**
      * 更新商户
@@ -77,5 +82,14 @@ public interface MerchantService {
      * @return
      */
     MerchantDto delete(Long id);
+
+    /**
+     * 获取账套列表
+     * @param token
+     * @return
+     * @throws ChanjetApiException
+     */
+    List<BookEntity> getBookList(String token) throws ChanjetApiException;
+
 
 }

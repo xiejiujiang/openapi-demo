@@ -7,8 +7,10 @@ package com.chanjet.changsha.bank.pay.exception;
  * @create: 2020-02-12 09:17
  **/
 public enum ErrorConst {
+    ERROR_PARAM(2002, "参数错误"),
     INTENAL_ERROR(500, "系统内部异常"),
-    NO_TOKEN(401, "用户非法")
+    NO_TOKEN(401, "用户非法"),
+    KEY_ERROR(2003, "秘钥错误")
     ;
 
     private int code;
