@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  * @create: 2020/11/11 11:07 上午
  **/
 @Log4j2
-@Component
+@Component("REFUNDQUERY")
 public class QueryRefundOrderHandler implements EventHandler<QueryRefundOrderContent> {
 
     @Autowired

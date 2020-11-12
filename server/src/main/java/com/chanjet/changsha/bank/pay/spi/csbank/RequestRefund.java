@@ -78,7 +78,7 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/newHX105/directBank/paygate/h5/thirdpartyQueryRefundOrder.do")
+        @POST("/directBank/newHX105/directBank/paygate/h5/thirdpartyRefund.do")
         Call<RequestRefundResponse> requestRefund(
                 @Field("OrderId") String orderId,
                 @Field("CancelReason") String cancelReason,

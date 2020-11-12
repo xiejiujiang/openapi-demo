@@ -15,14 +15,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 /**
  * @author: zsc
  * @create: 2020/11/10 3:28 下午
  **/
 @Log4j2
-@Component
+@Component("REFUND")
 public class RefundHandler implements EventHandler<RefundContent> {
 
     @Autowired
@@ -39,11 +37,9 @@ public class RefundHandler implements EventHandler<RefundContent> {
             String privateKeyString = merchantService.getPrivateKey(merchanId,refundContent.getBookId());
             RequestRefund requestRefund = csBankCommandBuilder.create(RequestRefund.class);
             requestRefund.setECustId(merchanId);
-            requestRefund.setERefundSn(refundContent.getThirdOrderId());
-            requestRefund.setOrderId(refundContent.getPayOrderId());
-            requestRefund.setRefundAmount(String.valueOf(amount));
-            requestRefund.setStaffId(refundContent.getOperator());
             requestRefund.setERefundSn(refundContent.getRefundOrderId());
+            requestRefund.setOrderId(refundContent.getThirdOrderId());
+            requestRefund.setRefundAmount(String.valueOf(amount));
             requestRefund.setPrivateKeyString(privateKeyString);
             RequestRefundResponse requestRefundResponse = requestRefund.excute();
             String status = requestRefundResponse.getStatus();

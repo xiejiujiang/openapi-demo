@@ -59,13 +59,14 @@ public class MessageController {
 
             //appKey不匹配返回fail
             if (!appConfig.getAppKey().equals(map.get(Constants.APP_KEY))) {
-                responseMap.put(Constants.RESULT, Constants.SUCCESS);
+                responseMap.put(Constants.RESULT, Constants.FAIL);
                 return responseMap;
             }
 
             //直接返回执行结果
             return execute(msg, msgType);
         } catch (Exception e) {
+            log.error("解析消息失败", e);
             responseMap.put(Constants.RESULT, Constants.FAIL);
             return responseMap;
         }
