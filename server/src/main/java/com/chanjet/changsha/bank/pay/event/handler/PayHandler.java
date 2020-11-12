@@ -42,6 +42,8 @@ public class PayHandler implements EventHandler<PayContent> {
             if ("2".equals(payMethod)) {
                 payMethod = "5";
             } else if ("4".equals(payMethod)) {
+                payMethod = "7";
+            } else {
                 return BizResponseBean.builder()
                         .result_code(PayStatus.PAY_ERROR)
                         .error_code("PAY_ERROR")
