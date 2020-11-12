@@ -58,7 +58,7 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/paygate/h5/thirdpartyQueryRefundOrder.do")
+        @POST("/directBank/newHX105/directBank/paygate/h5/thirdpartyQueryRefundOrder.do")
         Call<QueryRefundOrderResponse> queryRefundOrder(
                 @Field("OrderId") String orderId,
                 @Field("RePaymentSn") String rePaymentSn,

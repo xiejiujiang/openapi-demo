@@ -12,7 +12,9 @@ import javax.persistence.*;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "csbank_merchant")
+@Table(name = "csbank_merchant",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"bookId","merchanId"})
+})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

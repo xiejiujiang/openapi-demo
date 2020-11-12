@@ -51,7 +51,7 @@ public class OrderCancel extends AbstractValueResultApiCommand<OrderCancelRespon
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/paygate/v0/doOrderCancel.do")
+        @POST("/directBank/newHX105/directBank/paygate/v0/doOrderCancel.do")
         Call<OrderCancelResponse> cancel(
                 @Field("OrderId") String orderId,
                 @Field("ECustId") String eCustId,

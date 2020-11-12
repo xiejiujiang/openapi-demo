@@ -45,6 +45,10 @@ public class PayContent {
      * 支付方式
      */
     private String payMethod;
+    /**
+     * 账套ID
+     */
+    private String bookId;
 
     public static void main(String[] args) throws Exception {
         ChanjetMsg<PayContent> chanjetMsg = new ChanjetMsg<>();

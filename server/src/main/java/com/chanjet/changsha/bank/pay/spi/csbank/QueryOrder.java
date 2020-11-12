@@ -52,7 +52,7 @@ public class QueryOrder extends AbstractValueResultApiCommand<QueryOrderResponse
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/paygate/v0/orderQueryWithSign.do")
+        @POST("/directBank/newHX105/directBank/paygate/v0/orderQueryWithSign.do")
         Call<QueryOrderResponse> queryOrder(
                 @Field("MerchOrder") String merchOrder,
                 @Field("ECustId") String eCustId,
