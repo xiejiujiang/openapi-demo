@@ -35,7 +35,7 @@ public class ReverseOrderHandler implements EventHandler<ReverseOrderContent> {
             OrderCancel orderCancel = csBankCommandBuilder.create(OrderCancel.class);
             orderCancel.setECustId(merchanId);
             orderCancel.setPrivateKeyString(privateKeyString);
-            orderCancel.setOrderId(reverseOrderContent.getPayOrderId());
+            orderCancel.setOrderId(reverseOrderContent.getThirdOrderId());
             OrderCancelResponse orderCancelResponse = orderCancel.excute();
             ChanjetReverseOrderResponse chanjetReverseOrderResponse;
             if ("0000".equals(orderCancelResponse.getStatus())) {

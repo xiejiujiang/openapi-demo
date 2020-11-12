@@ -20,4 +20,8 @@ public class ReverseOrderContent {
      * 账套ID
      */
     private String bookId;
+    /**
+     * 第三方订单号
+     */
+    private String thirdOrderId;
 }
