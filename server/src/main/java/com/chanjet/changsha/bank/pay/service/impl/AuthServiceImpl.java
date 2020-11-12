@@ -7,6 +7,7 @@ import com.chanjet.changsha.bank.pay.service.AuthService;
 import com.chanjet.changsha.bank.pay.spi.chanjet.ChanjetSpi;
 import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
 import com.chanjet.openapi.sdk.java.response.GetTokenResponse;
+import com.chanjet.openapi.sdk.java.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,9 @@ public class AuthServiceImpl implements AuthService {
         }
         user.setToken(getTokenResponse.getResult().getAccessToken());
         user.setUserAuthPermanentCode(getTokenResponse.getResult().getUserAuthPermanentCode());
+        //获取畅捷通用户信息
+        UserResponse userResponse = chanjetSpi.user(user.getToken());
+        user.setName(userResponse.getName());
         userDao.save(user);
         return user;
     }
