@@ -110,13 +110,14 @@ public class MerchantController {
 
     /**
      * 保存商户信息
-     * @param token
      * @param merchantSaveDto
+     * @param token
      * @return
+     * @throws ChanjetApiException
      */
     @PostMapping("/saveMerchant")
     @NeedToken
-    public ChanjetValueResult<Boolean> saveMerchant(@CookieValue("token")String token,@RequestBody MerchantSaveDto merchantSaveDto) throws ChanjetApiException {
+    public ChanjetValueResult<Boolean> saveMerchant(@RequestBody MerchantSaveDto merchantSaveDto,@CookieValue("token")String token) throws ChanjetApiException {
         return ChanjetValueResult.success(merchantService.add(token,merchantSaveDto));
     }
 
