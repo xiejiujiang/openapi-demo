@@ -16,7 +16,7 @@ public class StatusUtils {
     public static ChanjetStatus getPayStatus(String orderStat, String msg) {
         switch (orderStat) {
             case OrderStat.ACCEPTED:
-                return new ChanjetStatus(PayStatus.PAY_PAYMENT, "", msg);
+                return new ChanjetStatus(PayStatus.PAY_FAIL, "", msg);
             case OrderStat.PAID:
                 return new ChanjetStatus(PayStatus.PAY_COMPLETE, "", msg);
             case OrderStat.CANCELLED:

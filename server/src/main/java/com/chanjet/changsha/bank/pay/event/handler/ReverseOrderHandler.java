@@ -31,7 +31,7 @@ public class ReverseOrderHandler implements EventHandler<ReverseOrderContent> {
         try {
             ReverseOrderContent reverseOrderContent = chanjetMsg.getBizContent();
             String merchanId = reverseOrderContent.getMerchanId();
-            String privateKeyString = merchantService.getPrivateKey(merchanId);
+            String privateKeyString = merchantService.getPrivateKey(merchanId,reverseOrderContent.getBookId());
             OrderCancel orderCancel = csBankCommandBuilder.create(OrderCancel.class);
             orderCancel.setECustId(merchanId);
             orderCancel.setPrivateKeyString(privateKeyString);

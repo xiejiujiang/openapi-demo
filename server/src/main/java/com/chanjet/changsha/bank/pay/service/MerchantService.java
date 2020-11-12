@@ -22,7 +22,7 @@ public interface MerchantService {
      * @param merchantId
      * @return
      */
-    String getPrivateKey(String merchantId);
+    String getPrivateKey(String merchantId,String bookId);
 
     /**
      * 上传私钥

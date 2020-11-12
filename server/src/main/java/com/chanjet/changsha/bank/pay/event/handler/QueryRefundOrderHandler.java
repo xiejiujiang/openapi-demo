@@ -35,7 +35,7 @@ public class QueryRefundOrderHandler implements EventHandler<QueryRefundOrderCon
         try {
             QueryRefundOrderContent queryRefundOrderContent = chanjetMsg.getBizContent();
             String merchanId = queryRefundOrderContent.getMerchanId();
-            String privateKeyString = merchantService.getPrivateKey(merchanId);
+            String privateKeyString = merchantService.getPrivateKey(merchanId,queryRefundOrderContent.getBookId());
             QueryRefundOrder queryRefundOrder = csBankCommandBuilder.create(QueryRefundOrder.class);
             queryRefundOrder.setECustId(merchanId);
             queryRefundOrder.setPrivateKeyString(privateKeyString);

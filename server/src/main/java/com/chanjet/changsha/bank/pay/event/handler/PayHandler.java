@@ -51,7 +51,7 @@ public class PayHandler implements EventHandler<PayContent> {
                         .error_message("不支持的支付方式")
                         .build();
             }
-            String privateString = merchantService.getPrivateKey(payContent.getMerchanId());
+            String privateString = merchantService.getPrivateKey(payContent.getMerchanId(),payContent.getBookId());
             OrderPay orderPay = csBankCommandBuilder.create(OrderPay.class);
             orderPay.setBackUrl(appConfig.getBackUrl());
             orderPay.setECustId(payContent.getMerchanId());

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface MerchantDao extends JpaRepository<Merchant, Long> {
-    Merchant findMerchantByMerchanId(String merchanId);
+    Merchant findMerchantByMerchanIdAndBookId(String merchanId,String bookId);
 
     Page<Merchant> findMerchantsByOrgId(String orgId, Pageable pageable);
 }

@@ -24,4 +24,8 @@ public class QueryRefundOrderContent {
      * 第三方订单号
      */
     private String thirdOrderId;
+    /**
+     * 账套ID
+     */
+    private String bookId;
 }

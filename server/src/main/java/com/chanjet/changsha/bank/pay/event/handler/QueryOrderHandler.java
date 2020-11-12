@@ -37,7 +37,7 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
         try {
             QueryOrderContent queryOrderContent = chanjetMsg.getBizContent();
             String merchanId = queryOrderContent.getMerchanId();
-            String privateKeyString = merchantService.getPrivateKey(merchanId);
+            String privateKeyString = merchantService.getPrivateKey(merchanId,queryOrderContent.getBookId());
             QueryOrder queryOrder = csBankCommandBuilder.create(QueryOrder.class);
             queryOrder.setECustId(merchanId);
             queryOrder.setPrivateKeyString(privateKeyString);

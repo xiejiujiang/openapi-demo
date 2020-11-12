@@ -36,7 +36,7 @@ public class RefundHandler implements EventHandler<RefundContent> {
             RefundContent refundContent = chanjetMsg.getBizContent();
             Double amount = Double.parseDouble(refundContent.getRefundAmount())/100;
             String merchanId = refundContent.getMerchanId();
-            String privateKeyString = merchantService.getPrivateKey(merchanId);
+            String privateKeyString = merchantService.getPrivateKey(merchanId,refundContent.getBookId());
             RequestRefund requestRefund = csBankCommandBuilder.create(RequestRefund.class);
             requestRefund.setECustId(merchanId);
             requestRefund.setERefundSn(refundContent.getThirdOrderId());

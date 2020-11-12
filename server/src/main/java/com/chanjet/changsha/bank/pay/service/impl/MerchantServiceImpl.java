@@ -58,8 +58,8 @@ public class MerchantServiceImpl implements MerchantService {
     private CsBankCommandBuilder csBankCommandBuilder;
 
     @Override
-    public String getPrivateKey(String merchantId) {
-        Merchant merchant = merchantDao.findMerchantByMerchanId(merchantId);
+    public String getPrivateKey(String merchantId,String bookId) {
+        Merchant merchant = merchantDao.findMerchantByMerchanIdAndBookId(merchantId,bookId);
         PrivateKey privateKey = privateKeyDao.findById(merchant.getPrivateKeyId()).orElse(new PrivateKey());
         return privateKey.getPrivateKeyString();
     }
@@ -132,6 +132,7 @@ public class MerchantServiceImpl implements MerchantService {
         return merchantDto;
     }
 
+    @Override
     public Page list(String token, int size, int page) {
         User user = userDao.findUserByToken(token);
         if (user == null){
@@ -160,6 +161,11 @@ public class MerchantServiceImpl implements MerchantService {
         BeanUtils.copyProperties(merchantDto,merchant);
         User user = userDao.findUserByToken(token);
         merchant.setOrgId(user.getOrgId());
+
+        Merchant merchantByMerchanIdAndBookId = merchantDao.findMerchantByMerchanIdAndBookId(merchantDto.getMerchanId(), merchantDto.getBookId());
+        if (null == merchantByMerchanIdAndBookId) {
+            
+        }
 
         Merchant merchantSave = merchantDao.saveAndFlush(merchant);
 
