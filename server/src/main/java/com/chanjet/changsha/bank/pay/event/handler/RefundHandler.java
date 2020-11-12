@@ -15,6 +15,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 /**
  * @author: zsc
  * @create: 2020/11/10 3:28 下午
@@ -32,13 +34,14 @@ public class RefundHandler implements EventHandler<RefundContent> {
     public Object execute(ChanjetMsg<RefundContent> chanjetMsg) {
         try {
             RefundContent refundContent = chanjetMsg.getBizContent();
+            Double amount = Double.parseDouble(refundContent.getRefundAmount())/100;
             String merchanId = refundContent.getMerchanId();
             String privateKeyString = merchantService.getPrivateKey(merchanId);
             RequestRefund requestRefund = csBankCommandBuilder.create(RequestRefund.class);
             requestRefund.setECustId(merchanId);
             requestRefund.setERefundSn(refundContent.getThirdOrderId());
             requestRefund.setOrderId(refundContent.getPayOrderId());
-            requestRefund.setRefundAmount(refundContent.getRefundAmount());
+            requestRefund.setRefundAmount(String.valueOf(amount));
             requestRefund.setStaffId(refundContent.getOperator());
             requestRefund.setERefundSn(refundContent.getRefundOrderId());
             requestRefund.setPrivateKeyString(privateKeyString);
@@ -73,5 +76,9 @@ public class RefundHandler implements EventHandler<RefundContent> {
                     .error_message("长沙银行退款调用失败")
                     .build();
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Double.valueOf("1")/100);
     }
 }

@@ -38,6 +38,7 @@ public class PayHandler implements EventHandler<PayContent> {
     public Object execute(ChanjetMsg<PayContent> chanjetMsg) {
         try {
             PayContent payContent = chanjetMsg.getBizContent();
+            Double amount = Double.parseDouble(payContent.getTotalAmount())/100;
             String payMethod = payContent.getPayMethod();
             if ("2".equals(payMethod)) {
                 payMethod = "5";
@@ -57,7 +58,7 @@ public class PayHandler implements EventHandler<PayContent> {
             orderPay.setPayMethod(payMethod);
             orderPay.setCardNo(payContent.getAuthCode());
             orderPay.setMerchOrder(payContent.getPayOrderId());
-            orderPay.setOrderAmount(payContent.getTotalAmount());
+            orderPay.setOrderAmount(String.valueOf(amount));
             orderPay.setRemark(payContent.getSubject());
             orderPay.setPrivateKeyString(privateString);
             OrderPayResponse orderPayResponse = orderPay.excute();
