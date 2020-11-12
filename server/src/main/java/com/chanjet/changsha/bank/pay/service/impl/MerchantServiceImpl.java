@@ -9,10 +9,7 @@ import com.chanjet.changsha.bank.pay.dao.UserDao;
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
 import com.chanjet.changsha.bank.pay.dto.MerchantSaveDto;
 import com.chanjet.changsha.bank.pay.entity.*;
-import com.chanjet.changsha.bank.pay.exception.ApiFailtureException;
-import com.chanjet.changsha.bank.pay.exception.BadNetworkExcepiton;
-import com.chanjet.changsha.bank.pay.exception.KeyErrorException;
-import com.chanjet.changsha.bank.pay.exception.NoTokenException;
+import com.chanjet.changsha.bank.pay.exception.*;
 import com.chanjet.changsha.bank.pay.pojo.OrderPayResponse;
 import com.chanjet.changsha.bank.pay.pojo.PushMerchantContent;
 import com.chanjet.changsha.bank.pay.pojo.PushMerchantResponse;
@@ -164,7 +161,7 @@ public class MerchantServiceImpl implements MerchantService {
 
         Merchant merchantByMerchanIdAndBookId = merchantDao.findMerchantByMerchanIdAndBookId(merchantDto.getMerchanId(), merchantDto.getBookId());
         if (null == merchantByMerchanIdAndBookId) {
-            
+            throw new MerchantIsBindException("该账套已绑定过商户ID【"+ merchantDto.getMerchanId() +"】，可到列表查看。");
         }
 
         Merchant merchantSave = merchantDao.saveAndFlush(merchant);
