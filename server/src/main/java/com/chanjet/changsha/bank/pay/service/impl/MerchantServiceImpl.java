@@ -78,6 +78,7 @@ public class MerchantServiceImpl implements MerchantService {
         OrderPay orderPay = csBankCommandBuilder.create(OrderPay.class);
         orderPay.setBackUrl("https://www.baidu.com");
         orderPay.setECustId(merchantId);
+        orderPay.setUrl(appConfig.getOrderPayUrl());
         orderPay.setPayMethod("7");
         orderPay.setCardNo("123456789012345678");
         orderPay.setMerchOrder(System.currentTimeMillis() + "");
@@ -92,7 +93,7 @@ public class MerchantServiceImpl implements MerchantService {
            }
         } catch (ApiFailtureException | BadNetworkExcepiton e) {
             log.error(e);
-            throw new KeyErrorException("稍后重试");
+            throw new KeyErrorException("系统错误，请稍后重试");
         }
 
         return privateKeyDao.save(privateKey);
