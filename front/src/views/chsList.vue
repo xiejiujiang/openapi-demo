@@ -19,7 +19,16 @@
                             <th width="20%">收款银行</th>
                             <th width="15%">操作</th>
                         </tr>
-                        <tr>
+                        <tr v-for="item in chsList" :key="item.id">
+                            <td>{{item.accountName}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.merchanId}}</td>
+                            <td>{{item.bankName}}</td>
+                            <td>
+                                <a class="btn-info" @click="goChaInfo(item.id)">查看详情</a>
+                            </td>
+                        </tr>
+                        <!-- <tr>
                             <td>账套名称001</td>
                             <td>畅捷通信息技术股份有限公司</td>
                             <td>6000 0000 0000 0000 000</td>
@@ -27,20 +36,11 @@
                             <td>
                                 <a class="btn-info" @click="goChaInfo()">查看详情</a>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>账套名称001</td>
-                            <td>畅捷通信息技术股份有限公司</td>
-                            <td>6000 0000 0000 0000 000</td>
-                            <td>长沙银行</td>
-                            <td>
-                                <a class="btn-info">查看详情</a>
-                            </td>
-                        </tr>
+                        </tr> -->
                     </table>
                 </div>
             </div>
-            <!-- 分页 -->
+            <!-- 分页 :hide-on-single-page='true'-->
             <div id="page-style">
                 <el-pagination
                 background
@@ -61,6 +61,7 @@
 
 <script>
 import chstop from '@/components/chsTop.vue'
+import chsApi from '@/api/chsApi.js'
 export default {
   components: {
     chstop: chstop
@@ -68,26 +69,49 @@ export default {
   data () {
     return {
       page: {
-        index: 1,
+        index: 0,
         size: 8,
         total: 0
-      }
+      },
+      chsList: []
     }
+  },
+  created () {
+    this.getchsList()
   },
   methods: {
     handleCurrentChange (val) {
       console.log('页码：', val)
-      // this.page.index = val
-      // this.getProductList()
+      this.page.index = val
+      this.getchsList()
     },
     handleSizeChange (val) {},
+    // 获取列表信息
+    getchsList () {
+      try {
+        chsApi.getchsBankList({ page: this.page.index, size: this.page.size }).then((r) => {
+          this.page.total = parseInt(r.totalCount)
+          console.log('r---> ', r)
+          this.chsList = r.resultList
+          if( this.chsList.length == '0' ){
+            this.$router.push({
+              path: '/chsform'
+            })
+          }
+        })
+      } catch (e) {
+        this.$message.error('系统出现错误,请稍后再试...')
+      } finally {
+        console.log('获取列表')
+      }
+    },
     // 跳转详情页
-    goChaInfo () {
+    goChaInfo (id) {
       this.$router.push({
-        path: '/chsinfo',
-        query: {
-          id: 123
-        }
+        path: '/chsinfo/' + id
+        // query: {
+        //   id: val
+        // }
       })
     },
     // 跳转表单页

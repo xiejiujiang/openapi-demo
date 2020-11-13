@@ -11,35 +11,31 @@
                 <ul class="info-list">
                     <li>
                         <span class="info-left-sty">绑定账套：</span>
-                        <span>222222</span>
+                        <span>{{chsInfo.bookId}}</span>
                     </li>
                     <li>
                         <span class="info-left-sty">商户ID：</span>
-                        <span>222222</span>
-                    </li>
-                    <li>
-                        <span class="info-left-sty">商户秘钥：</span>
-                        <span>222222</span>
+                        <span>{{chsInfo.merchanId}}</span>
                     </li>
                     <li>
                         <span class="info-left-sty">商户名称：</span>
-                        <span>222222</span>
+                        <span>{{chsInfo.name}}</span>
                     </li>
                     <li>
                         <span class="info-left-sty">收款银行：</span>
-                        <span>222222</span>
+                        <span>{{chsInfo.bankName}}</span>
                     </li>
                     <li>
                         <span class="info-left-sty">收款银行账户：</span>
-                        <span>222222</span>
+                        <span>{{chsInfo.accountName}}</span>
                     </li>
                     <li>
                         <span class="info-left-sty">公钥：</span>
-                        <span>222222</span>
+                        <span>{{chsInfo.publicKeyFileName}}</span>
                     </li>
                     <li>
-                        <span class="info-left-sty">秘钥：</span>
-                        <span>222222</span>
+                        <span class="info-left-sty">私钥：</span>
+                        <span>{{chsInfo.privateKeyFileName}}</span>
                     </li>
                 </ul>
             </div>
@@ -49,13 +45,33 @@
 
 <script>
 import chstop from '@/components/chsTop.vue'
+import chsApi from '@/api/chsApi.js'
 export default {
   components: {
     chstop: chstop
   },
+  data () {
+    return {
+      id: '',
+      chsInfo: {}
+    }
+  },
   methods: {
     goback () {
       this.$router.go(-1)
+    },
+    getchsInfo () {
+      try {
+        var id = this.$route.params.id
+        chsApi.getchsBankInfo(id).then((r) => {
+          console.log('订单详情---> ', r)
+          this.chsInfo = r
+        })
+      } catch (e) {
+        this.$message.error('系统出现错误,请稍后再试...')
+      } finally {
+        console.log('获取详情')
+      }
     }
   }
 }

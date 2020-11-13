@@ -1,13 +1,21 @@
 <template>
     <div class="chstop-box">
        <div class="logo-box"><img src="@/assets/images/chslogo.png" alt=""></div>
-       <div class="user-name">1231231231321</div>
+       <div class="user-name">{{uesrName}}</div>
     </div>
 </template>
 
 <script>
-// import uesImg from '@/assets/images/use.png'
-export default {}
+export default {
+  data () {
+    return{
+      uesrName:'123' 
+    }
+  },
+  mounted () {
+    this.uesrName = this.$route.params.name
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -29,8 +37,9 @@ export default {}
         }
     }
     .user-name{
-        width: 180px;
+        width: auto;
         padding-left: 30px;
+        padding-right: 30px;
         line-height: 50px;
         color: #fff;
         font-size: 16px;
