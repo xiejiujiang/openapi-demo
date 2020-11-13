@@ -29,4 +29,13 @@ app:
     redirectUri: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
     #前端url
     frontUrl: http://3810a707ed7f.ngrok.io/api/auth/test
-
+    #撤销订单url
+    orderCancelUrl: /directBank/paygate/v0/doOrderCancel.do
+    #付款码支付url
+    orderPayUrl: /directBank/paygate/v0/orderPay.do
+    #查询支付订单url
+    queryOrderUrl: /directBank/paygate/v0/orderQueryWithSign.do
+    #查询退款订单url
+    queryRefundOrderUrl: /directBank/paygate/h5/thirdpartyQueryRefundOrder.do
+    #退款url
+    requestRefundUrl: /directBank/paygate/h5/thirdpartyRefund.do

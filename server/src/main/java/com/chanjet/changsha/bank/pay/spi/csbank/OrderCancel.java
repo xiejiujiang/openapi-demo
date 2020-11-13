@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class OrderCancel extends AbstractValueResultApiCommand<OrderCancelRespon
      */
     private String orderId;
 
+    private String url;
+
     public OrderCancel(SpiBuilder spiBuilder) {
         super(spiBuilder);
     }
@@ -41,6 +44,7 @@ public class OrderCancel extends AbstractValueResultApiCommand<OrderCancelRespon
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
 
         return this.getSpiBuilder().create(OrderCancel.Spi.class).cancel(
+                this.url,
                 this.orderId,
                 this.eCustId,
                 this.serviceVersion,
@@ -51,8 +55,9 @@ public class OrderCancel extends AbstractValueResultApiCommand<OrderCancelRespon
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/newHX105/directBank/paygate/v0/doOrderCancel.do")
+        @POST
         Call<OrderCancelResponse> cancel(
+                @Url String url,
                 @Field("OrderId") String orderId,
                 @Field("ECustId") String eCustId,
                 @Field("Service_version") String serviceVersion,

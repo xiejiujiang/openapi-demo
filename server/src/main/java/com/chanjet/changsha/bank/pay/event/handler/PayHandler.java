@@ -17,6 +17,7 @@ import com.chanjet.changsha.bank.pay.utils.StatusUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * 付款码付款事件处理器
@@ -38,21 +39,18 @@ public class PayHandler implements EventHandler<PayContent> {
     public Object execute(ChanjetMsg<PayContent> chanjetMsg) {
         try {
             PayContent payContent = chanjetMsg.getBizContent();
-            Double amount = Double.parseDouble(payContent.getTotalAmount())/100;
-            String payMethod = payContent.getPayMethod();
-            if ("2".equals(payMethod)) {
-                payMethod = "5";
-            } else if ("4".equals(payMethod)) {
-                payMethod = "7";
-            } else {
+            Double amount = Double.parseDouble(payContent.getTotalAmount()) / 100;
+            String payMethod = getPayMethod(payContent.getPayMethod());
+            if (StringUtils.isEmpty(payMethod)) {
                 return BizResponseBean.builder()
                         .result_code(PayStatus.PAY_ERROR)
                         .error_code("PAY_ERROR")
                         .error_message("不支持的支付方式")
                         .build();
             }
-            String privateString = merchantService.getPrivateKey(payContent.getMerchanId(),payContent.getBookId());
+            String privateString = merchantService.getPrivateKey(payContent.getMerchanId(), payContent.getBookId());
             OrderPay orderPay = csBankCommandBuilder.create(OrderPay.class);
+            orderPay.setUrl(appConfig.getOrderPayUrl());
             orderPay.setBackUrl(appConfig.getBackUrl());
             orderPay.setECustId(payContent.getMerchanId());
             orderPay.setPayMethod(payMethod);
@@ -119,6 +117,22 @@ public class PayHandler implements EventHandler<PayContent> {
                     .error_code("PAY_ERROR")
                     .error_message("长沙银行付款码支付调用失败")
                     .build();
+        }
+    }
+
+    /**
+     * 根据畅捷通的支付方式获取长沙银行对应的支付方式
+     *
+     * @param payMethod
+     * @return
+     */
+    private String getPayMethod(String payMethod) {
+        if ("2".equals(payMethod)) {
+            return "5";
+        } else if ("4".equals(payMethod)) {
+            return "7";
+        } else {
+            return null;
         }
     }
 

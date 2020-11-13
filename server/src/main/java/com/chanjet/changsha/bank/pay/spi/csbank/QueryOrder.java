@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class QueryOrder extends AbstractValueResultApiCommand<QueryOrderResponse
      * 商户方订单号
      */
     private String merchOrder;
+    private String url;
 
     public QueryOrder(SpiBuilder spiBuilder) {
         super(spiBuilder);
@@ -42,6 +44,7 @@ public class QueryOrder extends AbstractValueResultApiCommand<QueryOrderResponse
         paramMap.put("MerchOrder", this.merchOrder);
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
         return this.getSpiBuilder().create(QueryOrder.Spi.class).queryOrder(
+                this.url,
                 this.merchOrder,
                 this.eCustId,
                 this.serviceVersion,
@@ -52,8 +55,9 @@ public class QueryOrder extends AbstractValueResultApiCommand<QueryOrderResponse
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/newHX105/directBank/paygate/v0/orderQueryWithSign.do")
+        @POST
         Call<QueryOrderResponse> queryOrder(
+                @Url String url,
                 @Field("MerchOrder") String merchOrder,
                 @Field("ECustId") String eCustId,
                 @Field("Service_version") String serviceVersion,

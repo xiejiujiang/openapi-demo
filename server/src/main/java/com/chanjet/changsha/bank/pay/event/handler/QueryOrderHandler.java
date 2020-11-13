@@ -2,6 +2,7 @@ package com.chanjet.changsha.bank.pay.event.handler;
 
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.common.BizResponseBean;
+import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.QueryOrderContent;
@@ -31,6 +32,8 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
     private CsBankCommandBuilder csBankCommandBuilder;
     @Autowired
     private MerchantService merchantService;
+    @Autowired
+    private AppConfig appConfig;
 
     @Override
     public Object execute(ChanjetMsg<QueryOrderContent> chanjetMsg) {
@@ -39,6 +42,7 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
             String merchanId = queryOrderContent.getMerchanId();
             String privateKeyString = merchantService.getPrivateKey(merchanId,queryOrderContent.getBookId());
             QueryOrder queryOrder = csBankCommandBuilder.create(QueryOrder.class);
+            queryOrder.setUrl(appConfig.getQueryOrderUrl());
             queryOrder.setECustId(merchanId);
             queryOrder.setPrivateKeyString(privateKeyString);
             queryOrder.setMerchOrder(queryOrderContent.getPayOrderId());

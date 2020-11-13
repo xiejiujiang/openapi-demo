@@ -4,9 +4,7 @@ import com.chanjet.changsha.bank.pay.annotation.ApiRestController;
 import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.entity.User;
 import com.chanjet.changsha.bank.pay.service.AuthService;
-import com.chanjet.changsha.bank.pay.spi.chanjet.ChanjetSpi;
 import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
-import com.chanjet.openapi.sdk.java.response.UserResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +27,6 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private AppConfig appConfig;
-    @Autowired
-    private ChanjetSpi chanjetSpi;
 
     /**
      * 接收用户授权码

@@ -3,6 +3,7 @@ package com.chanjet.changsha.bank.pay.event.handler;
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.common.BizResponseBean;
 import com.chanjet.changsha.bank.pay.common.RefundStatus;
+import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.QueryRefundOrderContent;
@@ -29,6 +30,8 @@ public class QueryRefundOrderHandler implements EventHandler<QueryRefundOrderCon
     private MerchantService merchantService;
     @Autowired
     private CsBankCommandBuilder csBankCommandBuilder;
+    @Autowired
+    private AppConfig appConfig;
 
     @Override
     public Object execute(ChanjetMsg<QueryRefundOrderContent> chanjetMsg) {
@@ -37,6 +40,7 @@ public class QueryRefundOrderHandler implements EventHandler<QueryRefundOrderCon
             String merchanId = queryRefundOrderContent.getMerchanId();
             String privateKeyString = merchantService.getPrivateKey(merchanId,queryRefundOrderContent.getBookId());
             QueryRefundOrder queryRefundOrder = csBankCommandBuilder.create(QueryRefundOrder.class);
+            queryRefundOrder.setUrl(appConfig.getQueryRefundOrderUrl());
             queryRefundOrder.setECustId(merchanId);
             queryRefundOrder.setPrivateKeyString(privateKeyString);
             queryRefundOrder.setOrderId(queryRefundOrderContent.getThirdOrderId());

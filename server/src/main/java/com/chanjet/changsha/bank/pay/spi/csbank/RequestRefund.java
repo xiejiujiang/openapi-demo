@@ -10,9 +10,8 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +45,8 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
      */
     private String staffId;
 
+    private String url;
+
     public RequestRefund(SpiBuilder spiBuilder) {
         super(spiBuilder);
     }
@@ -64,6 +65,7 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
         paramMap.put("StaffId", this.staffId);
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
         return this.getSpiBuilder().create(RequestRefund.Spi.class).requestRefund(
+                this.url,
                 this.orderId,
                 this.cancelReason,
                 this.refundAmount,
@@ -78,8 +80,9 @@ public class RequestRefund extends AbstractValueResultApiCommand<RequestRefundRe
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/newHX105/directBank/paygate/h5/thirdpartyRefund.do")
+        @POST
         Call<RequestRefundResponse> requestRefund(
+                @Url String url,
                 @Field("OrderId") String orderId,
                 @Field("CancelReason") String cancelReason,
                 @Field("RefundAmount") String refundAmount,

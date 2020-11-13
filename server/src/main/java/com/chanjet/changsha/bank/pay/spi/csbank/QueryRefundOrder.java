@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,8 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
      */
     private String rePaymentSn;
 
+    private String url;
+
     public QueryRefundOrder(SpiBuilder spiBuilder) {
         super(spiBuilder);
     }
@@ -47,6 +50,7 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
         paramMap.put("RePaymentSn", this.rePaymentSn);
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
         return this.getSpiBuilder().create(QueryRefundOrder.Spi.class).queryRefundOrder(
+                this.url,
                 this.orderId,
                 this.rePaymentSn,
                 this.eCustId,
@@ -58,8 +62,9 @@ public class QueryRefundOrder extends AbstractValueResultApiCommand<QueryRefundO
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/newHX105/directBank/paygate/h5/thirdpartyQueryRefundOrder.do")
+        @POST
         Call<QueryRefundOrderResponse> queryRefundOrder(
+                @Url String url,
                 @Field("OrderId") String orderId,
                 @Field("RePaymentSn") String rePaymentSn,
                 @Field("ECustId") String eCustId,
