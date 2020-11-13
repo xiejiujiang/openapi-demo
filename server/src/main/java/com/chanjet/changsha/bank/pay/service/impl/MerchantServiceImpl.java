@@ -161,7 +161,7 @@ public class MerchantServiceImpl implements MerchantService {
         merchant.setOrgId(user.getOrgId());
 
         Merchant merchantByMerchanIdAndBookId = merchantDao.findMerchantByMerchanIdAndBookId(merchantDto.getMerchanId(), merchantDto.getBookId());
-        if (null == merchantByMerchanIdAndBookId) {
+        if (null != merchantByMerchanIdAndBookId) {
             throw new MerchantIsBindException("该账套已绑定过商户ID【"+ merchantDto.getMerchanId() +"】，可到列表查看。");
         }
 
