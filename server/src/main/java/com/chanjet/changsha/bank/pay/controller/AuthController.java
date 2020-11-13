@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * @author: zsc
@@ -46,7 +47,7 @@ public class AuthController {
         cookie.setHttpOnly(false);
         cookie.setSecure(false);
         response.addCookie(cookie);
-        response.sendRedirect(appConfig.getFrontUrl() + "?name=" + user.getName());
+        response.sendRedirect(appConfig.getFrontUrl() + "?name=" + URLEncoder.encode(user.getName(),"UTF-8"));
     }
 
     /**
