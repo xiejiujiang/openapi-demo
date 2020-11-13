@@ -28,7 +28,7 @@ app:
     #Oauth重定向地址
     redirectUri: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
     #前端url
-    frontUrl: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/test
+    frontUrl: https://inte-csbank-pay.chanapp.chanjet.com/chslist
     #撤销订单url
     orderCancelUrl: /directBank/newHX105/directBank/paygate/v0/doOrderCancel.do
     #付款码支付url
