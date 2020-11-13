@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -116,7 +117,7 @@ public class MerchantController {
      */
     @PostMapping("/saveMerchant")
     @NeedToken
-    public ChanjetValueResult<Boolean> saveMerchant(@CookieValue("token")String token,@RequestBody MerchantSaveDto merchantSaveDto) throws ChanjetApiException {
+    public ChanjetValueResult<Boolean> saveMerchant(@CookieValue("token")String token,@Valid @RequestBody MerchantSaveDto merchantSaveDto) throws ChanjetApiException {
         return ChanjetValueResult.success(merchantService.add(token,merchantSaveDto));
     }
 
