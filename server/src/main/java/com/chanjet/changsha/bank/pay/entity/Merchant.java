@@ -3,6 +3,7 @@ package com.chanjet.changsha.bank.pay.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 商户信息
@@ -32,6 +33,10 @@ public class Merchant extends AbstractBaseEntity<Long> {
      * 账套ID
      */
     private String bookId;
+    /**
+     * 账套名称
+     */
+    private String bookName;
     /**
      * 商户ID，长沙银行的ECustId
      */

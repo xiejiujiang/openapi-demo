@@ -26,6 +26,11 @@ public class MerchantSaveDto {
     @NotBlank
     private String bookId;
     /**
+     * 账套名称
+     */
+    @NotBlank
+    private String bookName;
+    /**
      * 商户ID，长沙银行的ECustId
      */
     @NotBlank
