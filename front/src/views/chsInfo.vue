@@ -56,6 +56,9 @@ export default {
       chsInfo: {}
     }
   },
+  created () {
+    this.getchsInfo()
+  },
   methods: {
     goback () {
       this.$router.go(-1)
@@ -121,11 +124,13 @@ export default {
             li{
                 margin-bottom: 30px;
                 text-align: center;
+                overflow: hidden;
                 span{
-                    display: inline-block;
+                    display: block;
+                    float: left;
                 }
                 .info-left-sty{
-                    width: 110px;
+                    width: 260px;
                     text-align: right;
                 }
             }
