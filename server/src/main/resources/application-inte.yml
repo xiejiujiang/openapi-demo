@@ -24,11 +24,11 @@ app:
     #加解密key
     encryptKey: 9876543210987654
     #长沙银行支付结果推送地址
-    backUrl: https://inte-csbank-pay.chanapp.chanjet.com/api/message/test
+    backUrl: https://csbank-pay.chanapp.inte.chanjet.com/api/message/test
     #Oauth重定向地址
     redirectUri: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
     #前端url
-    frontUrl: https://inte-csbank-pay.chanapp.chanjet.com/chslist
+    frontUrl: /chslist
     #撤销订单url
     orderCancelUrl: /directBank/newHX105/directBank/paygate/v0/doOrderCancel.do
     #付款码支付url
