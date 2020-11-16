@@ -12,7 +12,7 @@ const routes = [
     component: ChsList
   },
   {
-    path: '/chsinfo',
+    path: '/chsinfo/:id',
     component: ChsInfo
   },
   {
