@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="listShow">
     <chstop></chstop>
     <div class="content-box">
         <div class="content-white">
@@ -73,7 +73,8 @@ export default {
         size: 8,
         total: 0
       },
-      chsList: []
+      chsList: [],
+      listShow: false
     }
   },
   created () {
@@ -97,6 +98,8 @@ export default {
             this.$router.push({
               path: '/chsform'
             })
+          }else {
+            this.listShow = true
           }
         })
       } catch (e) {

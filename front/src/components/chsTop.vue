@@ -9,11 +9,11 @@
 export default {
   data () {
     return{
-      uesrName:'123' 
+      uesrName:'' 
     }
   },
   mounted () {
-    this.uesrName = this.$route.params.name
+    this.uesrName = this.$route.query.name
   }
 }
 </script>
