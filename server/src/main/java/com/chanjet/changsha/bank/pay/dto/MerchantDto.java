@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author: zsc
  * @create: 2020/11/9 2:17 下午
@@ -23,6 +25,10 @@ public class MerchantDto {
      * 账套ID
      */
     private String bookId;
+    /**
+     * 账套名称
+     */
+    private String bookName;
     /**
      * 商户ID，长沙银行的ECustId
      */
