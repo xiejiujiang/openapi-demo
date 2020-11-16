@@ -62,7 +62,7 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public PrivateKey uploadPrivateKey(File file, String password, String merchantId) {
+    public PrivateKey uploadPrivateKey(File file, String password, String merchantId,String fileName) {
         String privateKeyString = "";
         try {
             privateKeyString = SignUtil.getPrivateKeyString(file, password);
@@ -71,7 +71,7 @@ public class MerchantServiceImpl implements MerchantService {
             throw new KeyErrorException("私钥和秘钥不匹配");
         }
         PrivateKey privateKey = PrivateKey.builder()
-                .fileName(file.getName())
+                .fileName(fileName)
                 .privateKeyString(privateKeyString)
                 .key(password)
                 .build();
@@ -100,11 +100,11 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public PublicKey uploadPublicKey(File file) {
+    public PublicKey uploadPublicKey(File file,String fileName) {
         try {
             String publicKeyString = SignUtil.getPublicKeyString(file);
             PublicKey publicKey = PublicKey.builder()
-                    .fileName(file.getName())
+                    .fileName(fileName)
                     .key(publicKeyString)
                     .build();
             return publicKeyDao.save(publicKey);

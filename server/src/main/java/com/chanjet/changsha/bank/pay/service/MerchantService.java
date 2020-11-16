@@ -31,7 +31,7 @@ public interface MerchantService {
      * @param password
      * @return
      */
-    PrivateKey uploadPrivateKey(File file, String password,String merchantId);
+    PrivateKey uploadPrivateKey(File file, String password,String merchantId,String fileName);
 
     /**
      * 上传公钥
@@ -39,7 +39,7 @@ public interface MerchantService {
      * @param file
      * @return
      */
-    PublicKey uploadPublicKey(File file);
+    PublicKey uploadPublicKey(File file,String fileName);
 
     /**
      * 根据ID查询商户信息

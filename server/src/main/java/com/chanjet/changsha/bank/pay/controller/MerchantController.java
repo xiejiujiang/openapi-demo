@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author: zsc
@@ -51,7 +52,7 @@ public class MerchantController {
         File tmpFile = getFile(file);
         file.transferTo(tmpFile);
 
-        PublicKey publicKey = merchantService.uploadPublicKey(tmpFile);
+        PublicKey publicKey = merchantService.uploadPublicKey(tmpFile,file.getOriginalFilename());
 
         Files.delete(tmpFile.toPath());
         KeyDto keyDto = KeyDto.builder()
@@ -75,7 +76,7 @@ public class MerchantController {
         File tmpFile = getFile(file);
         file.transferTo(tmpFile);
 
-        PrivateKey privateKey = merchantService.uploadPrivateKey(tmpFile, pwd,merchantId);
+        PrivateKey privateKey = merchantService.uploadPrivateKey(tmpFile, pwd,merchantId,file.getOriginalFilename());
 
         Files.delete(tmpFile.toPath());
         KeyDto keyDto = KeyDto.builder()
@@ -136,16 +137,11 @@ public class MerchantController {
 
 
     private File getFile(MultipartFile file) {
-
         String originalFilename = file.getOriginalFilename();
-
         if (StringUtils.isEmpty(originalFilename)) {
-
             throw new ErrorParamsRuntimeException("file is empty");
         }
-        return new File(FileUtil.getTmpDir(), originalFilename);
-
-
+        return new File(FileUtil.getTmpDir(), UUID.randomUUID().toString());
     }
 
 }
