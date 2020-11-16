@@ -10,13 +10,13 @@
                 <!-- 表单 -->
                 <div class="form-style">
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-                        <el-form-item label="绑定账套" prop="bookId">
-                            <el-select v-model="ruleForm.bookId" placeholder="请选择账套" style="width:100%">
+                        <el-form-item label="绑定账套" prop="bookName">
+                            <el-select v-model="ruleForm.bookName" placeholder="请选择账套" style="width:100%" @change="name">
                                 <el-option
                                 v-for="(item,index) in bookList"
                                 :key="index"
                                 :label="item.name"
-                                :value="item.id"></el-option>
+                                :value="{bookId: item.id, bookName:item.name}" ></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="商户ID" prop="merchanId">
@@ -63,12 +63,11 @@
                         <el-form-item style="text-align: center;" id="tijiao">
                             <el-button
                             style="width:200px;height:46px;"
-                            :disabled = " disabled "
                             type="primary"
                             @click="submitForm(ruleForm)">保存并提交</el-button>
-                            <div class="check-style">
+                            <!--:disabled = " disabled "  <div class="check-style">
                                 <el-checkbox v-model="shsChecked" @change="infoChenk()">信息填写后需履行<a href="">【长沙银行支付协议】</a></el-checkbox>
-                            </div>
+                            </div> -->
                         </el-form-item>
                     </el-form>
                 </div>
@@ -112,7 +111,8 @@ export default {
       disabled: true,
       shsChecked: false,
       ruleForm: {
-        bookId: '',
+				bookId: '',
+				bookName: '',
         merchanId: '',
         bankName: '',
         accountName: '',
@@ -125,14 +125,14 @@ export default {
       messageForm: '',
       popSuccse: false,
       rules: {
-        bookId: [
+        bookName: [
           { required: true, message: '请选择', trigger: 'change' }
         ],
         merchanId: [
           { required: true, message: '请输入商户ID', trigger: 'blur' }
         ],
         shkey: [
-          { required: true, message: '请输入商户秘钥eeeeeeee', trigger: 'change' }
+          { required: true, message: '请输入商户秘钥', trigger: 'change' }
         ],
         bankName: [
           { required: true, message: '请输入银行名称', trigger: 'blur' }
@@ -236,7 +236,14 @@ export default {
           return false
         }
       })
-    },
+		},
+		name (val) {
+			this.ruleForm.bookName = val.bookName
+			this.ruleForm.bookId = val.bookId
+			if(val == ''){
+				callback(new Error('请选择'))
+			}
+		},
     openTishi () {
       const h = this.$createElement
       //   this.$msgbox.confirm(this.messageForm, {
@@ -250,8 +257,14 @@ export default {
       })
     },
     goList () {
+			 let name = this.$route.query.name;
+       let query = {};
+       if(name){
+            query.name = name;
+       }
       this.$router.push({
-        path: '/chslist'
+				path: '/chslist',
+				query: query
       })
     }
   }

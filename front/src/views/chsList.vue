@@ -20,7 +20,7 @@
                             <th width="15%">操作</th>
                         </tr>
                         <tr v-for="item in chsList" :key="item.id">
-                            <td>{{item.accountName}}</td>
+                            <td>{{item.bookName}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.merchanId}}</td>
                             <td>{{item.bankName}}</td>
@@ -74,11 +74,13 @@ export default {
         total: 0
       },
       chsList: [],
-      listShow: false
+      listShow: false,
+      query: {}
     }
   },
   created () {
     this.getchsList()
+    this.uesrName = this.$route.query.name
   },
   methods: {
     handleCurrentChange (val) {
@@ -95,9 +97,7 @@ export default {
           console.log('r---> ', r)
           this.chsList = r.resultList
           if( this.chsList.length == '0' ){
-            this.$router.push({
-              path: '/chsform'
-            })
+            this.goFrom () 
           }else {
             this.listShow = true
           }
@@ -108,19 +108,33 @@ export default {
         console.log('获取列表')
       }
     },
+    // 获取url name值
+    getName () {
+      let name = this.$route.query.name;
+      if(name){
+        this.query.name = name;
+      }
+    },
     // 跳转详情页
     goChaInfo (id) {
+
+    //    let name = this.$route.query.name;
+    //    let query = {};
+    //    if(name){
+    //         query.name = name;
+    //    }
+      this.getName ()
       this.$router.push({
-        path: '/chsinfo/' + id
-        // query: {
-        //   id: val
-        // }
+        path: '/chsinfo/' + id,
+        query: this.query
       })
     },
     // 跳转表单页
     goFrom () {
+      this.getName ()
       this.$router.push({
-        path: '/chsform'
+        path: '/chsform',
+        query: this.query
       })
     }
   }
