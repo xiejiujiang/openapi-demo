@@ -11,7 +11,7 @@
                 <ul class="info-list">
                     <li>
                         <span class="info-left-sty">绑定账套：</span>
-                        <span>{{chsInfo.bookId}}</span>
+                        <span>{{chsInfo.bookName}}</span>
                     </li>
                     <li>
                         <span class="info-left-sty">商户ID：</span>
@@ -122,12 +122,14 @@ export default {
             font-size: 14px;
             padding: 40px 0 20px;
             li{
-                margin-bottom: 30px;
+                margin-bottom: 20px;
                 text-align: center;
                 overflow: hidden;
                 span{
                     display: block;
                     float: left;
+                    height: 30px;
+                    line-height: 30px;
                 }
                 .info-left-sty{
                     width: 260px;
