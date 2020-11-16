@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
@@ -14,4 +14,16 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    const defaultWidth = 375  //iphone6/7/8
+    const deviceWidth = window.screen.width
+    //如果是pc端
+    if(deviceWidth<1000){
+      document.querySelector("body").style.minWidth = 0+'px'
+      // const radio = deviceWidth/defaultWidth
+      // console.log("设置rem：",radio,(deviceWidth/defaultWidth*14).toFixed(2))
+      // document.querySelector("body").style.fontSize = (deviceWidth/defaultWidth*14).toFixed(2)+'px'
+      document.querySelector("html").style.fontSize = (deviceWidth/defaultWidth*14).toFixed(2)+'px'
+    }
+  </script>
 </html>
