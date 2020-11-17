@@ -20,10 +20,10 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="商户ID" prop="merchanId">
-                            <el-input v-model="ruleForm.merchanId"></el-input>
+                            <el-input v-model="ruleForm.merchanId"  :disabled="secretVlaid"></el-input>
                         </el-form-item>
                         <el-form-item label="商户秘钥" prop="shkey">
-                            <el-input v-model="ruleForm.shkey"></el-input>
+                            <el-input v-model="ruleForm.shkey" :disabled="secretVlaid"></el-input>
                         </el-form-item>
                         <el-form-item label="商户名称" prop="name">
                             <el-input v-model="ruleForm.name"></el-input>
@@ -31,8 +31,23 @@
                         <el-form-item label="收款银行名称" prop="bankName">
                             <el-input v-model="ruleForm.bankName"></el-input>
                         </el-form-item>
-                        <el-form-item label="收款银行账户" prop="accountName">
+                        <el-form-item label="收款账号" prop="accountName">
                             <el-input v-model.number="ruleForm.accountName"></el-input>
+                        </el-form-item>
+												<el-form-item label="私钥" prop="private" id="si">
+                            <el-upload
+														ref="privateUpload"
+                            class="upload-demo"
+                            multiple
+                            :limit="1"
+                            :action="action"
+														accept='application/x-pkcs12'
+                            :on-remove="handleRemove"
+                            :before-upload="onBeforeUpload"
+                            :http-request="filePrivate">
+                            <el-button plain icon="el-icon-upload2">点击上传私钥文件</el-button>
+                            <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                            </el-upload>
                         </el-form-item>
                         <el-form-item label="公钥" prop="public" id="gong">
                             <el-upload
@@ -40,23 +55,11 @@
                             multiple
                             :limit="1"
                             :action="action"
+														accept='application/x-x509-ca-cert'
                             :on-remove="handleRemove"
                             :before-upload="onBeforeUpload"
                             :http-request="filePublic">
                             <el-button plain icon="el-icon-upload2">点击上传公钥文件</el-button>
-                            <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-                            </el-upload>
-                        </el-form-item>
-                        <el-form-item label="私钥" prop="private" id="si">
-                            <el-upload
-                            class="upload-demo"
-                            multiple
-                            :limit="1"
-                            :action="action"
-                            :on-remove="handleRemove"
-                            :before-upload="onBeforeUpload"
-                            :http-request="filePrivate">
-                            <el-button plain icon="el-icon-upload2">点击上传私钥文件</el-button>
                             <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
                             </el-upload>
                         </el-form-item>
@@ -107,6 +110,7 @@ export default {
 			callback()
 		}
     return {
+			secretVlaid: false,
       action: 'test',
       disabled: true,
       shsChecked: false,
@@ -181,15 +185,17 @@ export default {
     // 私钥上传
     filePrivate (obj) {
       var pwd = this.ruleForm.shkey
-      var merchantId = this.ruleForm.merchanId
-      chsApi.privateKey(obj, pwd, merchantId).then(r => {
+			var merchantId = this.ruleForm.merchanId
+			chsApi.privateKey(obj, pwd, merchantId).then(r => {
 				this.$emit('uploadSuccess', r)
-				console.log('s--------',r.value.id);
+				//console.log('s--------',r.value.id);
 				this.ruleForm.privateKeyId = r.value.id
-      }).catch(error => {
-        console.log('私钥---', error)
-        this.$message.error(error)
-      })
+				this.secretVlaid = true
+			}).catch(error => {
+				this.$refs.privateUpload.clearFiles()
+				this.$message.error(error)
+				this.secretVlaid = false
+			})
     },
     // 校验文件
     onBeforeUpload (obj) {
@@ -201,14 +207,31 @@ export default {
       }
       if (!isTxt) {
         this.$message.error('上传的文件必须是 pex 或 cer 格式')
-      }
-      return isTxt
+			}
+
+			let isMerchanId = true
+			if(this.ruleForm.merchanId != '' && this.ruleForm.shkey  != '') {
+				isMerchanId = true
+			} else {
+				isMerchanId = false
+			}
+			if (!isMerchanId ) {
+				if(this.ruleForm.merchanId == '' && this.ruleForm.shkey == ''){
+				  this.$message.error('商户ID和秘钥为必填')
+				}else if(this.ruleForm.shkey == ''){
+					this.$message.error('请填写秘钥')
+				}else if(this.ruleForm.merchanId == ''){
+					this.$message.error('请填写商户ID')
+				}
+			}
+
+      return isTxt, isMerchanId
     },
     // 移除
     handleRemove (obj) {
-      console.log('删除-----', obj)
-      this.$emit('txtRemove', obj)
-    },
+			console.log('删除-----', obj)
+			this.$emit('txtRemove', obj)
+		},
     infoChenk () {
       if (this.shsChecked) {
         this.disabled = false
@@ -219,6 +242,10 @@ export default {
     // 提交表单
     submitForm: function (val) {
       this.$refs.ruleForm.validate((valid) => {
+				if(!this.secretVlaid ||  !this.privateKeyId){
+					console.log('error submit!!')
+					return false
+				}
         if (valid) {  
 					delete val.shkey
           chsApi.saveMerchant(val).then(r => {
