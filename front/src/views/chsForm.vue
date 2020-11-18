@@ -230,7 +230,8 @@ export default {
     // 移除
     handleRemove (obj) {
 			console.log('删除-----', obj)
-			this.$emit('txtRemove', obj)
+      this.$emit('txtRemove', obj)
+      this.secretVlaid = false
 		},
     infoChenk () {
       if (this.shsChecked) {
@@ -242,26 +243,28 @@ export default {
     // 提交表单
     submitForm: function (val) {
       this.$refs.ruleForm.validate((valid) => {
-				if(!this.secretVlaid ||  !this.privateKeyId){
-					console.log('error submit!!')
-					return false
-				}
-        if (valid) {  
-					delete val.shkey
-          chsApi.saveMerchant(val).then(r => {
-            console.log('success', r)
-            if (r.data.result) {
-							// this.$message('成功')
-              this.popSuccse = true
-            } else {
-              this.messageForm = r.data.error.hint
-              this.openTishi()
-            }
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+				// if(!this.secretVlaid ||  !this.privateKeyId){
+        //   debugger
+				// 	console.log('error submit!!')
+				// 	return false
+				// }else{
+          if (valid) {  
+            delete val.shkey
+            chsApi.saveMerchant(val).then(r => {
+              console.log('success', r)
+              if (r.data.result) {
+                // this.$message('成功')
+                this.popSuccse = true
+              } else {
+                this.messageForm = r.data.error.hint
+                this.openTishi()
+              }
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        // }
       })
 		},
 		name (val) {
