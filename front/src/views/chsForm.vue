@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main" v-title data-title="长沙银行公共支付">
         <chstop></chstop>
         <div class="content-box">
             <div class="content-white">
@@ -41,11 +41,11 @@
                             multiple
                             :limit="1"
                             :action="action"
-														accept='application/x-pkcs12'
                             :on-remove="handleRemove"
                             :before-upload="onBeforeUpload"
                             :http-request="filePrivate">
                             <el-button plain icon="el-icon-upload2">点击上传私钥文件</el-button>
+                            <div class="error-ubload">只能上传pfx后缀的文件</div>
                             <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
                             </el-upload>
                         </el-form-item>
@@ -55,11 +55,11 @@
                             multiple
                             :limit="1"
                             :action="action"
-														accept='application/x-x509-ca-cert'
                             :on-remove="handleRemove"
                             :before-upload="onBeforeUpload"
                             :http-request="filePublic">
                             <el-button plain icon="el-icon-upload2">点击上传公钥文件</el-button>
+                            <div class="error-ubload">只能上传cer后缀的文件</div>
                             <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
                             </el-upload>
                         </el-form-item>
@@ -206,7 +206,7 @@ export default {
         isTxt = false
       }
       if (!isTxt) {
-        this.$message.error('上传的文件必须是 pex 或 cer 格式')
+        this.$message.error('上传的文件必须是 pfx 或 cer 格式')
 			}
 
 			let isMerchanId = true
@@ -385,6 +385,14 @@ export default {
 }
 </style>
 <style>
+.error-ubload{
+  font-size: 12px;
+  position: absolute;
+  left: 180px;
+  top:13px;
+  z-index: 2;
+  color: #999;
+}
 .el-form-item{ margin-bottom: 30px !important;}
 .el-form-item__label{ color:#151515 !important;}
 .el-input__inner{border:1px solid #ddd !important;}

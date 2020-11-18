@@ -4,9 +4,13 @@ import router from './router'
 import '@/plugins/elem.js'
 import 'element-ui/lib/theme-chalk/index.css'
 
-
-
 Vue.config.productionTip = false
+
+Vue.directive('title', {
+  inserted: function (el, binding) {
+    document.title = el.dataset.title
+  }
+})
 
 new Vue({
   router,
