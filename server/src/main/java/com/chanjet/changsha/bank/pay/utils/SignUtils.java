@@ -186,4 +186,52 @@ public class SignUtils {
         signCheck.update(content);
         return signCheck.verify(signature);
     }
+
+    public static void main(String[] args) throws IOException, GeneralSecurityException {
+        TreeMap<String, String> map = new TreeMap<>();
+        map.put("BackUrl", "https://inte-openapi.chanjet.com");
+        map.put("CardNo", "134652386019640689");
+        map.put("ECustId", "E2020052200035");
+        map.put("MerchOrder", "2020110955555");
+        map.put("OrderAmount", "0.02");
+        map.put("PayMethod", "7");
+        map.put("Remark", "pos_alipay");
+        map.put("Service_version", "1.0");
+        String signature = sign(map);
+        System.out.println("付款码支付签名：" + signature);
+
+
+        TreeMap<String, String> map1 = new TreeMap<>();
+        map1.put("ECustId", "E2020052200035");
+        map1.put("MerchOrder", "2020110944444");
+        map1.put("Service_version", "1.0");
+        String signature1 = sign(map1);
+        System.out.println("查询订单签名：" + signature1);
+
+        TreeMap<String, String> map2 = new TreeMap<>();
+        map2.put("ECustId", "E2020052200035");
+        map2.put("Service_version", "1.0");
+        map2.put("OrderId", "202011123001715753");
+        map2.put("RePaymentSn", "1234567899");
+        String signature2 = sign(map2);
+        System.out.println("查询退款订单签名：" + signature2);
+
+        TreeMap<String, String> map3 = new TreeMap<>();
+        map3.put("ECustId", "E2020052200035");
+        map3.put("Service_version", "1.0");
+        map3.put("BalanceDate", "20201105");
+        map3.put("FileType", "3");
+        String signature3 = sign(map3);
+        System.out.println("查询对账单签名：" + signature3);
+
+        TreeMap<String, String> map4 = new TreeMap<>();
+        map4.put("ECustId", "E2020052200035");
+        map4.put("Service_version", "1.0");
+        map4.put("OrderId", "202011123001715753");
+        map4.put("CancelReason", "退款");
+        map4.put("RefundAmount", "0.02");
+        map4.put("ERefundSn", "1234567899");
+        String signature4 = sign(map4);
+        System.out.println("申请退款签名：" + signature4);
+    }
 }

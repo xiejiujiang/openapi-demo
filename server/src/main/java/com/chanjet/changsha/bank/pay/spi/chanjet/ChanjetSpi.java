@@ -1,6 +1,7 @@
 package com.chanjet.changsha.bank.pay.spi.chanjet;
 
 import com.chanjet.changsha.bank.pay.config.AppConfig;
+import com.chanjet.changsha.bank.pay.pojo.*;
 import com.chanjet.openapi.sdk.java.ChanjetClient;
 import com.chanjet.openapi.sdk.java.domain.GetAppAccessTokenContent;
 import com.chanjet.openapi.sdk.java.domain.GetOrgAccessTokenContent;
@@ -8,7 +9,9 @@ import com.chanjet.openapi.sdk.java.domain.GetPermanentAuthCodeContent;
 import com.chanjet.openapi.sdk.java.domain.GetTokenByPermanentCodeContent;
 import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
 import com.chanjet.openapi.sdk.java.request.*;
+import com.chanjet.openapi.sdk.java.request.hsy.FindByEnterpriseIdRequest;
 import com.chanjet.openapi.sdk.java.response.*;
+import com.chanjet.openapi.sdk.java.response.hsy.FindByEnterpriseIdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -86,8 +89,8 @@ public class ChanjetSpi {
         getTokenRequest.setRequestUri("/auth/getToken");
         getTokenRequest.addQueryParam("redirectUri", redirectUri);
         getTokenRequest.addQueryParam("code", code);
-        getTokenRequest.addQueryParam("grantType","authorization_code");
-        getTokenRequest.addQueryParam("appKey",appConfig.getAppKey());
+        getTokenRequest.addQueryParam("grantType", "authorization_code");
+        getTokenRequest.addQueryParam("appKey", appConfig.getAppKey());
 
         return chanjetClient.execute(getTokenRequest);
     }
@@ -99,13 +102,83 @@ public class ChanjetSpi {
      * @return
      * @throws ChanjetApiException
      */
-    GetTokenByPermanentCodeResponse getTokenByPermanentCode(GetTokenByPermanentCodeContent getTokenByPermanentCodeContent) throws ChanjetApiException {
+    public GetTokenByPermanentCodeResponse getTokenByPermanentCode(GetTokenByPermanentCodeContent getTokenByPermanentCodeContent) throws ChanjetApiException {
         GetTokenByPermanentCodeRequest getTokenByPermanentCodeRequest = new GetTokenByPermanentCodeRequest();
         getTokenByPermanentCodeRequest.setAppKey(appConfig.getAppKey());
         getTokenByPermanentCodeRequest.setAppSecret(appConfig.getAppSecret());
         getTokenByPermanentCodeRequest.setRequestUri("/auth/token/getTokenByPermanentCode");
         getTokenByPermanentCodeRequest.setBizContent(getTokenByPermanentCodeContent);
         return chanjetClient.execute(getTokenByPermanentCodeRequest);
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param openToken 开放平台token
+     * @return
+     * @throws ChanjetApiException
+     */
+    public UserResponse user(String openToken) throws ChanjetApiException {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setAppKey(appConfig.getAppKey());
+        userRequest.setAppSecret(appConfig.getAppSecret());
+        userRequest.setOpenToken(openToken);
+        userRequest.setRequestUri("/accounting/cia/api/v1/user");
+        return chanjetClient.execute(userRequest);
+    }
+
+
+    /**
+     * 获取好生意账套列表
+     *
+     * @param openToken 开放平台token
+     * @param queryType 查询类型
+     * @return
+     * @throws ChanjetApiException
+     */
+    public FindByEnterpriseIdResponse findByEnterpriseId(String openToken, String queryType) throws ChanjetApiException {
+        FindByEnterpriseIdRequest findByEnterpriseIdRequest = new FindByEnterpriseIdRequest();
+        findByEnterpriseIdRequest.setAppKey(appConfig.getAppKey());
+        findByEnterpriseIdRequest.setAppSecret(appConfig.getAppSecret());
+        findByEnterpriseIdRequest.setOpenToken(openToken);
+        findByEnterpriseIdRequest.setRequestUri("/accounting/openapi/cc/book/findByEnterpriseId");
+        findByEnterpriseIdRequest.addQueryParam("queryType", queryType);
+        return chanjetClient.execute(findByEnterpriseIdRequest);
+    }
+
+
+    /**
+     * 推送支付订单信息
+     *
+     * @param pushOrderInfoContent
+     * @return
+     * @throws ChanjetApiException
+     */
+    public PushOrderInfoResponse pushOrderInfo(PushOrderInfoContent pushOrderInfoContent) throws ChanjetApiException {
+        PushOrderInfoRequest pushOrderInfoRequest = new PushOrderInfoRequest();
+        pushOrderInfoRequest.setAppKey(appConfig.getAppKey());
+        pushOrderInfoRequest.setAppSecret(appConfig.getAppSecret());
+        pushOrderInfoRequest.setRequestUri("/commonpay/pushOrderInfo");
+        pushOrderInfoRequest.setBizContent(pushOrderInfoContent);
+        return chanjetClient.execute(pushOrderInfoRequest);
+    }
+
+
+    /**
+     * 推送商户信息
+     *
+     * @param pushMerchantContent
+     * @return
+     * @throws ChanjetApiException
+     */
+    public PushMerchantResponse pushMerchant(String openToken, PushMerchantContent pushMerchantContent) throws ChanjetApiException {
+        PushMerchantRequest pushMerchantRequest = new PushMerchantRequest();
+        pushMerchantRequest.setAppKey(appConfig.getAppKey());
+        pushMerchantRequest.setAppSecret(appConfig.getAppSecret());
+        pushMerchantRequest.setOpenToken(openToken);
+        pushMerchantRequest.setRequestUri("/commonpay/pushMerchant");
+        pushMerchantRequest.setBizContent(pushMerchantContent);
+        return chanjetClient.execute(pushMerchantRequest);
     }
 
 }

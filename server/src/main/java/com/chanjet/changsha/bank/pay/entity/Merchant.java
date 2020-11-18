@@ -3,6 +3,7 @@ package com.chanjet.changsha.bank.pay.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 商户信息
@@ -12,7 +13,9 @@ import javax.persistence.*;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "csbank_merchant")
+@Table(name = "csbank_merchant",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"bookId","merchanId"})
+})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +33,10 @@ public class Merchant extends AbstractBaseEntity<Long> {
      * 账套ID
      */
     private String bookId;
+    /**
+     * 账套名称
+     */
+    private String bookName;
     /**
      * 商户ID，长沙银行的ECustId
      */

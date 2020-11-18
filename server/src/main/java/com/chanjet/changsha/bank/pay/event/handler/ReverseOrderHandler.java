@@ -1,6 +1,7 @@
 package com.chanjet.changsha.bank.pay.event.handler;
 
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
+import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.ReverseOrderContent;
@@ -25,17 +26,20 @@ public class ReverseOrderHandler implements EventHandler<ReverseOrderContent> {
     private CsBankCommandBuilder csBankCommandBuilder;
     @Autowired
     private MerchantService merchantService;
+    @Autowired
+    private AppConfig appConfig;
 
     @Override
     public Object execute(ChanjetMsg<ReverseOrderContent> chanjetMsg) {
         try {
             ReverseOrderContent reverseOrderContent = chanjetMsg.getBizContent();
             String merchanId = reverseOrderContent.getMerchanId();
-            String privateKeyString = merchantService.getPrivateKey(merchanId);
+            String privateKeyString = merchantService.getPrivateKey(merchanId,reverseOrderContent.getBookId());
             OrderCancel orderCancel = csBankCommandBuilder.create(OrderCancel.class);
+            orderCancel.setUrl(appConfig.getOrderPayUrl());
             orderCancel.setECustId(merchanId);
             orderCancel.setPrivateKeyString(privateKeyString);
-            orderCancel.setOrderId(reverseOrderContent.getPayOrderId());
+            orderCancel.setOrderId(reverseOrderContent.getThirdOrderId());
             OrderCancelResponse orderCancelResponse = orderCancel.excute();
             ChanjetReverseOrderResponse chanjetReverseOrderResponse;
             if ("0000".equals(orderCancelResponse.getStatus())) {

@@ -1,8 +1,9 @@
 package com.chanjet.changsha.bank.pay.utils;
 
 import com.chanjet.changsha.bank.pay.common.OrderStat;
+import com.chanjet.changsha.bank.pay.common.RefundStatus;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
-import com.chanjet.changsha.bank.pay.pojo.PayStatus;
+import com.chanjet.changsha.bank.pay.common.PayStatus;
 
 /**
  * 状态码工具类，用于做长沙银行和畅捷通的错误码转换
@@ -12,10 +13,10 @@ import com.chanjet.changsha.bank.pay.pojo.PayStatus;
  **/
 public class StatusUtils {
 
-    public static ChanjetStatus getChanjetStatus(String orderStat, String msg) {
+    public static ChanjetStatus getPayStatus(String orderStat, String msg) {
         switch (orderStat) {
             case OrderStat.ACCEPTED:
-                return new ChanjetStatus(PayStatus.PAY_PAYMENT, "", msg);
+                return new ChanjetStatus(PayStatus.PAY_FAIL, "", msg);
             case OrderStat.PAID:
                 return new ChanjetStatus(PayStatus.PAY_COMPLETE, "", msg);
             case OrderStat.CANCELLED:
@@ -45,7 +46,23 @@ public class StatusUtils {
             case OrderStat.CLOSED:
                 return new ChanjetStatus(PayStatus.PAY_CLOSE, "", msg);
             default:
-                return new ChanjetStatus(PayStatus.PAY_FAIL, "PAY_ERROR", msg);
+                return new ChanjetStatus(PayStatus.PAY_ERROR, "PAY_ERROR", msg);
+        }
+    }
+
+
+    public static ChanjetStatus getRefundStatus(String orderStat, String msg) {
+        switch (orderStat) {
+            case OrderStat.REFUND_SUCCESSFULLY:
+                return new ChanjetStatus(RefundStatus.REFUNDED_COMPLETE, "", msg);
+            case OrderStat.REFUND_EXECUTION:
+                return new ChanjetStatus(RefundStatus.REFUNDED_INPROGRESS, "", msg);
+            case OrderStat.REFUND_FAILED:
+                return new ChanjetStatus(RefundStatus.REFUNDED_FAIL, "", msg);
+            case OrderStat.SUSPICIOUS_REFUND:
+                return new ChanjetStatus(RefundStatus.REFUNDED_ERROR, "", msg);
+            default:
+                return new ChanjetStatus(RefundStatus.REFUNDED_ERROR, "", msg);
         }
     }
 

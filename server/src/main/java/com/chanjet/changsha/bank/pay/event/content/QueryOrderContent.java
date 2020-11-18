@@ -18,4 +18,8 @@ public class QueryOrderContent {
      * 商户号
      */
     private String merchanId;
+    /**
+     * 账套ID
+     */
+    private String bookId;
 }

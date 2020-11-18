@@ -23,6 +23,22 @@ app:
     appSecret: 6C901AFCA78DEC78FCD67D7EA8DC9C0B
     #加解密key
     encryptKey: 9876543210987654
-    backUrl: https://inte-csbank-pay.chanapp.chanjet.com/message/test
+    #长沙银行支付结果推送地址
+    backUrl: https://csbank-pay.chanapp.inte.chanjet.com/api/message/test
+    #Oauth重定向地址
+    redirectUri: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
+    #前端url
+    frontUrl: /chslist
+    #撤销订单url
+    orderCancelUrl: /directBank/newHX105/directBank/paygate/v0/doOrderCancel.do
+    #付款码支付url
+    orderPayUrl: /directBank/newHX105/directBank/paygate/v0/orderPay.do
+    #查询支付订单url
+    queryOrderUrl: /directBank/newHX105/directBank/paygate/v0/orderQueryWithSign.do
+    #查询退款订单url
+    queryRefundOrderUrl: /directBank/newHX105/directBank/paygate/h5/thirdpartyQueryRefundOrder.do
+    #退款url
+    requestRefundUrl: /directBank/newHX105/directBank/paygate/h5/thirdpartyRefund.do
+
 
 

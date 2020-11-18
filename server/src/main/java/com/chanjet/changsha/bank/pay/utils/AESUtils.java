@@ -48,19 +48,9 @@ public class AESUtils {
 
 
     public static void main(String[] args) {
-        String content = "{\n" +
-                " \"id\": \"dbe8970a-53a7-165c-7339-02c55bbddea5\",\n" +
-                " \"appKey\": \"FQa4kEGD\",\n" +
-                " \"appId\": \"34526534673\",\n" +
-                " \"msgType\": \"notice\",\n" +
-                " \"time\": \"1603698652093\",\n" +
-                " \"bizContent\": {\n" +
-                "  \"name:\": \"测试\",\n" +
-                "  \"value\": \"测试\"\n" +
-                " }\n" +
-                "}";
+        String content = "{\"id\":\"75e9456ac5ee43ebb0a0a26a3a7d7da5\",\"appKey\":\"ptPrU0YV\",\"msgType\":\"REFUND\",\"time\":\"1605167299197\",\"bizContent\":{\"payOrderId\":\"isvtesta00s1hor8dsqerkkk\",\"refundOrderId\":\"isvtesta00s1hor8dsqerkkk666\",\"refundAmount\":\"1\",\"totalAmount\":\"1\",\"operator\":\"21q\",\"thirdOrderId\":\"202011123001723253\",\"merchanId\":\"E2020052200035\",\"bookId\":\"1221659663138816\"}}";
         System.out.println("加密前：" + content);
-        String key = "1234567890123456";
+        String key = "9876543210987654";
         System.out.println("加密密钥和解密密钥：" + key);
         try {
             String encrypt = aesEncrypt(content, key);

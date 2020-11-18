@@ -46,6 +46,8 @@ public class OrderPay extends AbstractValueResultApiCommand<OrderPayResponse> {
      */
     private String remark;
 
+    private String url;
+
     public OrderPay(SpiBuilder spiBuilder) {
         super(spiBuilder);
     }
@@ -66,6 +68,7 @@ public class OrderPay extends AbstractValueResultApiCommand<OrderPayResponse> {
         String sign = SignUtil.sign(this.privateKeyString, paramMap);
 
         return this.getSpiBuilder().create(OrderPay.Spi.class).pay(
+                this.url,
                 this.backUrl,
                 this.cardNo,
                 this.eCustId,
@@ -81,8 +84,9 @@ public class OrderPay extends AbstractValueResultApiCommand<OrderPayResponse> {
     interface Spi {
 
         @FormUrlEncoded
-        @POST("/directBank/newHX105/directBank/paygate/v0/orderPay.do")
+        @POST
         Call<OrderPayResponse> pay(
+                @Url String url,
                 @Field("BackUrl") String backUrl,
                 @Field("CardNo") String cardNo,
                 @Field("ECustId") String eCustId,

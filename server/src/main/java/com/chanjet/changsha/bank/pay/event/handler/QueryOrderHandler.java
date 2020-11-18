@@ -2,15 +2,17 @@ package com.chanjet.changsha.bank.pay.event.handler;
 
 import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.common.BizResponseBean;
+import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.event.ChanjetMsg;
 import com.chanjet.changsha.bank.pay.event.EventHandler;
 import com.chanjet.changsha.bank.pay.event.content.QueryOrderContent;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetQueryOrderResponse;
 import com.chanjet.changsha.bank.pay.pojo.ChanjetStatus;
-import com.chanjet.changsha.bank.pay.pojo.PayStatus;
+import com.chanjet.changsha.bank.pay.common.PayStatus;
 import com.chanjet.changsha.bank.pay.pojo.QueryOrderResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.csbank.QueryOrder;
+import com.chanjet.changsha.bank.pay.utils.DateUtil;
 import com.chanjet.changsha.bank.pay.utils.StatusUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,17 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
     private CsBankCommandBuilder csBankCommandBuilder;
     @Autowired
     private MerchantService merchantService;
+    @Autowired
+    private AppConfig appConfig;
 
     @Override
     public Object execute(ChanjetMsg<QueryOrderContent> chanjetMsg) {
         try {
             QueryOrderContent queryOrderContent = chanjetMsg.getBizContent();
             String merchanId = queryOrderContent.getMerchanId();
-            String privateKeyString = merchantService.getPrivateKey(merchanId);
+            String privateKeyString = merchantService.getPrivateKey(merchanId,queryOrderContent.getBookId());
             QueryOrder queryOrder = csBankCommandBuilder.create(QueryOrder.class);
+            queryOrder.setUrl(appConfig.getQueryOrderUrl());
             queryOrder.setECustId(merchanId);
             queryOrder.setPrivateKeyString(privateKeyString);
             queryOrder.setMerchOrder(queryOrderContent.getPayOrderId());
@@ -45,11 +50,12 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
             ChanjetQueryOrderResponse chanjetQueryOrderResponse;
             BizResponseBean bizResponseBean;
             if ("0000".equals(queryOrderResponse.getStatus())) {
+                ChanjetStatus chanjetStatus = StatusUtils.getPayStatus(queryOrderResponse.getOrderStat(), queryOrderResponse.getMsg());
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
-                        .payTime(queryOrderResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(queryOrderResponse.getOrderId())
                         .payType("OPEN")
-                        .payStatus(PayStatus.PAY_COMPLETE)
+                        .payStatus(chanjetStatus.getResultCode())
                         .openId(queryOrderResponse.getThirdUserId())
                         .thirdOrderId(queryOrderResponse.getOrderId())
                         .build();
@@ -60,7 +66,7 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
                 //构建待支付响应
             } else if ("0008".equals(queryOrderResponse.getStatus())) {
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
-                        .payTime(queryOrderResponse.getOrderTime())
+                        .payTime(DateUtil.getDate())
                         .transactionId(queryOrderResponse.getOrderId())
                         .payType("OPEN")
                         .payStatus(PayStatus.PAY_PAYMENT)
@@ -74,18 +80,12 @@ public class QueryOrderHandler implements EventHandler<QueryOrderContent> {
                         .build();
                 //构建失败响应
             } else {
-                ChanjetStatus chanjetStatus = StatusUtils.getChanjetStatus(queryOrderResponse.getOrderStat(), queryOrderResponse.getMsg());
+                ChanjetStatus chanjetStatus = StatusUtils.getPayStatus(queryOrderResponse.getOrderStat(), queryOrderResponse.getMsg());
                 chanjetQueryOrderResponse = ChanjetQueryOrderResponse.builder()
-                        .payType("OPEN")
                         .payStatus(chanjetStatus.getResultCode())
-                        .payTime(queryOrderResponse.getOrderTime())
-                        .transactionId(queryOrderResponse.getOrderId())
-                        .thirdOrderId(queryOrderResponse.getOrderId())
-                        .openId(queryOrderResponse.getThirdUserId())
                         .build();
                 bizResponseBean = BizResponseBean.builder()
                         .result_code(chanjetStatus.getResultCode())
-                        .error_code(chanjetStatus.getErrorCode())
                         .error_message(chanjetStatus.getErrorMessage())
                         .data(chanjetQueryOrderResponse)
                         .build();

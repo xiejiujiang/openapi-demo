@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
  * @author: nxw
  * @create: 2020-02-12 09:17
  **/
-@RestControllerAdvice(basePackages="com.chanjet.developer.api")
+@RestControllerAdvice(basePackages="com.chanjet.changsha.bank.pay.controller")
 public class GlobalExceptionController {
 	private static final Logger Log = LoggerFactory.getLogger(GlobalExceptionController.class);
 	

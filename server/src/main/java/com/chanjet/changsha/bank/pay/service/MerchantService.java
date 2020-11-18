@@ -1,6 +1,12 @@
 package com.chanjet.changsha.bank.pay.service;
 
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
+import com.chanjet.changsha.bank.pay.dto.MerchantSaveDto;
+import com.chanjet.changsha.bank.pay.entity.BookEntity;
+import com.chanjet.changsha.bank.pay.entity.Page;
+import com.chanjet.changsha.bank.pay.entity.PrivateKey;
+import com.chanjet.changsha.bank.pay.entity.PublicKey;
+import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
 
 import java.io.File;
 import java.util.List;
@@ -10,14 +16,13 @@ import java.util.List;
  * @create: 2020/11/5 3:02 下午
  **/
 public interface MerchantService {
-
     /**
-     * 根据商户ID查询私钥
+     * 根据商户ID获取私钥字符串
      *
      * @param merchantId
      * @return
      */
-    String getPrivateKey(String merchantId);
+    String getPrivateKey(String merchantId,String bookId);
 
     /**
      * 上传私钥
@@ -26,7 +31,7 @@ public interface MerchantService {
      * @param password
      * @return
      */
-    Long uploadPrivateKey(File file, String password);
+    PrivateKey uploadPrivateKey(File file, String password,String merchantId,String fileName);
 
     /**
      * 上传公钥
@@ -34,7 +39,7 @@ public interface MerchantService {
      * @param file
      * @return
      */
-    Long uploadPublicKey(File file);
+    PublicKey uploadPublicKey(File file,String fileName);
 
     /**
      * 根据ID查询商户信息
@@ -46,11 +51,12 @@ public interface MerchantService {
 
     /**
      * 查询商户列表
-     *
-     * @param userId
+     * @param token
+     * @param size
+     * @param page
      * @return
      */
-    List<MerchantDto> list(String userId);
+    Page<MerchantDto> list(String token, int size, int page);
 
     /**
      * 添加商户
@@ -58,7 +64,7 @@ public interface MerchantService {
      * @param merchantDto
      * @return
      */
-    MerchantDto add(MerchantDto merchantDto);
+    boolean add(String token,MerchantSaveDto merchantDto) throws ChanjetApiException;
 
     /**
      * 更新商户
@@ -76,5 +82,14 @@ public interface MerchantService {
      * @return
      */
     MerchantDto delete(Long id);
+
+    /**
+     * 获取账套列表
+     * @param token
+     * @return
+     * @throws ChanjetApiException
+     */
+    List<BookEntity> getBookList(String token) throws ChanjetApiException;
+
 
 }
