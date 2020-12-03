@@ -61,7 +61,7 @@ public class PushMerchantContent extends AbstractChanjetContent {
                 .type("OPEN")
                 .bankName(merchant.getBankName())
                 .accountName(merchant.getAccountName())
-                .serviceName("长沙银行")
+                .serviceName("CSYH")
                 .appKey(appKey)
                 .build();
     }
