@@ -2,9 +2,9 @@ server:
   port: 9999
 spring:
   datasource:
-    url: jdbc:postgresql://pgm-2ze1c5g56k8qi62814790.pg.rds.aliyuncs.com:3433/developer_center
-    username: developer_center
-    password: g4u5w2m3
+    url: jdbc:postgresql://prodpublicpg10bj.pg.rds.aliyuncs.com:3433/commonpay
+    username: commonpay
+    password: e3h4u6p7
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
@@ -14,21 +14,21 @@ spring:
 app:
   config:
     #长沙银行支付网关地址
-    csBankUrl: http://test.bankofchangsha.com
+    csBankUrl: https://pbank.bankofchangsha.com
     #畅捷通开放平台地址
-    chanjetOpenUrl: https://inte-openapi.chanjet.com
+    chanjetOpenUrl: https://openapi.chanjet.com
     #畅捷通开放平台appKey
-    appKey: ptPrU0YV
+    appKey: r6qKN2wq
     #畅捷通开放平台appSecret
-    appSecret: 6C901AFCA78DEC78FCD67D7EA8DC9C0B
+    appSecret: 09EDA89E3863A4D76192DAA7C91C24AF
     #加解密key
-    encryptKey: 9876543210987654
+    encryptKey: csbankeytwuxrsy4
     #长沙银行支付结果推送地址
-    backUrl: https://inte-csbank-pay.chanapp.chanjet.com/api/message/test
+    backUrl: https://csbank-pay.chanapp.chanjet.com/api/message/test
     #Oauth重定向地址
-    redirectUri: https://inte-csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
+    redirectUri: https://csbank-pay.chanapp.chanjet.com/api/auth/receiveCode
     #前端url
-    frontUrl: http://3810a707ed7f.ngrok.io/api/auth/test
+    frontUrl: /chslist
     #撤销订单url
     orderCancelUrl: /directBank/paygate/v0/doOrderCancel.do
     #付款码支付url
@@ -39,4 +39,3 @@ app:
     queryRefundOrderUrl: /directBank/paygate/h5/thirdpartyQueryRefundOrder.do
     #退款url
     requestRefundUrl: /directBank/paygate/h5/thirdpartyRefund.do
-
