@@ -1,6 +1,6 @@
 <template>
     <div class="chstop-box">
-       <div class="logo-box"><img src="@/assets/images/chslogo.png" alt=""></div>
+       <div class="logo-box"></div>
        <div class="user-name">{{uesrName}}</div>
     </div>
 </template>
@@ -9,7 +9,7 @@
 export default {
   data () {
     return{
-      uesrName:'' 
+      uesrName:''
     }
   },
   mounted () {
