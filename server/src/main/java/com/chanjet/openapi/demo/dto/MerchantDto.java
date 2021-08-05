@@ -28,7 +28,7 @@ public class MerchantDto {
      */
     private String bookName;
     /**
-     * 商户ID，长沙银行的ECustId
+     * 商户ID
      */
     private String merchanId;
     /**

@@ -3,7 +3,7 @@ package com.chanjet.openapi.demo.event;
 import lombok.Data;
 
 /**
- * 畅捷通的消息,也兼容了长沙银行的消息
+ * 畅捷通的消息
  *
  * @author: zsc
  * @create: 2020/11/5 5:47 下午

@@ -68,9 +68,6 @@
                             style="width:200px;height:46px;"
                             type="primary"
                             @click="submitForm(ruleForm)">保存并提交</el-button>
-                            <!--:disabled = " disabled "  <div class="check-style">
-                                <el-checkbox v-model="shsChecked" @change="infoChenk()">信息填写后需履行<a href="">【长沙银行支付协议】</a></el-checkbox>
-                            </div> -->
                         </el-form-item>
                     </el-form>
                 </div>

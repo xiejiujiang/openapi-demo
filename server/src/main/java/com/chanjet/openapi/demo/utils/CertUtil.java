@@ -13,7 +13,7 @@ import java.security.cert.CertificateFactory;
 import java.util.Enumeration;
 
 /**
- * 文件流获取公私钥，拷贝自长沙银行提供demo
+ * 文件流获取公私钥
  *
  * @author: zsc
  * @create: 2020/11/4 5:28 下午

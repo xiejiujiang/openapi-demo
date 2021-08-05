@@ -32,7 +32,6 @@
                             <td>账套名称001</td>
                             <td>畅捷通信息技术股份有限公司</td>
                             <td>6000 0000 0000 0000 000</td>
-                            <td>长沙银行</td>
                             <td>
                                 <a class="btn-info" @click="goChaInfo()">查看详情</a>
                             </td>
