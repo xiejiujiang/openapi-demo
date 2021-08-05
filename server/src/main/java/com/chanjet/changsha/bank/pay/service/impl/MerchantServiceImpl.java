@@ -1,6 +1,5 @@
 package com.chanjet.changsha.bank.pay.service.impl;
 
-import com.chanjet.changsha.bank.pay.command.builder.CsBankCommandBuilder;
 import com.chanjet.changsha.bank.pay.config.AppConfig;
 import com.chanjet.changsha.bank.pay.dao.MerchantDao;
 import com.chanjet.changsha.bank.pay.dao.PrivateKeyDao;
@@ -11,11 +10,11 @@ import com.chanjet.changsha.bank.pay.dto.MerchantSaveDto;
 import com.chanjet.changsha.bank.pay.entity.*;
 import com.chanjet.changsha.bank.pay.exception.KeyErrorException;
 import com.chanjet.changsha.bank.pay.exception.MerchantIsBindException;
-import com.chanjet.changsha.bank.pay.exception.NoTokenException;
 import com.chanjet.changsha.bank.pay.pojo.PushMerchantContent;
 import com.chanjet.changsha.bank.pay.pojo.PushMerchantResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.chanjet.ChanjetSpi;
+import com.chanjet.changsha.bank.pay.utils.SignUtil;
 import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
 import com.chanjet.openapi.sdk.java.response.hsy.FindByEnterpriseIdResponse;
 import lombok.extern.log4j.Log4j2;
@@ -110,9 +109,6 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public Page list(String token, int size, int page) {
         User user = userDao.findUserByToken(token);
-        if (user == null){
-            throw new NoTokenException("token不合法");
-        }
         String orgId = user.getOrgId();
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         PageRequest pageable = PageRequest.of(page, size, sort);

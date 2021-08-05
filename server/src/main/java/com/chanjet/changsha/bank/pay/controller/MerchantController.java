@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * 商户上传必要信息
+ *
  * @author: zsc
  * @create: 2020/11/5 3:06 下午
  **/
@@ -41,6 +43,7 @@ public class MerchantController {
 
     /**
      * 公钥上传
+     *
      * @param file 公钥文件
      * @return
      * @throws IOException
@@ -51,7 +54,7 @@ public class MerchantController {
         File tmpFile = getFile(file);
         file.transferTo(tmpFile);
 
-        PublicKey publicKey = merchantService.uploadPublicKey(tmpFile,file.getOriginalFilename());
+        PublicKey publicKey = merchantService.uploadPublicKey(tmpFile, file.getOriginalFilename());
 
         Files.delete(tmpFile.toPath());
         KeyDto keyDto = KeyDto.builder()
@@ -63,19 +66,20 @@ public class MerchantController {
 
     /**
      * 私钥上传
+     *
      * @param file 私钥文件
-     * @param pwd 私钥秘钥
+     * @param pwd  私钥秘钥
      * @return
      * @throws IOException
      */
 
     @PostMapping("/uploadPrivateKey")
     @NeedToken
-    public ChanjetValueResult<KeyDto> uploadPrivateKey( MultipartFile file, String pwd, String merchantId) throws IOException {
+    public ChanjetValueResult<KeyDto> uploadPrivateKey(MultipartFile file, String pwd, String merchantId) throws IOException {
         File tmpFile = getFile(file);
         file.transferTo(tmpFile);
 
-        PrivateKey privateKey = merchantService.uploadPrivateKey(tmpFile, pwd,merchantId,file.getOriginalFilename());
+        PrivateKey privateKey = merchantService.uploadPrivateKey(tmpFile, pwd, merchantId, file.getOriginalFilename());
 
         Files.delete(tmpFile.toPath());
         KeyDto keyDto = KeyDto.builder()
@@ -87,17 +91,19 @@ public class MerchantController {
 
     /**
      * 根据id查询详情
+     *
      * @param id
      * @return
      */
     @GetMapping("/findMerchantById/{id}")
     @NeedToken
-    public ChanjetValueResult<MerchantDto> findMerchantById(@PathVariable("id") Long id){
+    public ChanjetValueResult<MerchantDto> findMerchantById(@PathVariable("id") Long id) {
         return ChanjetValueResult.success(merchantService.queryById(id));
     }
 
     /**
      * 获取列表
+     *
      * @param token
      * @param page
      * @param size
@@ -105,12 +111,13 @@ public class MerchantController {
      */
     @GetMapping("/findMerchantById/{page}/{size}")
     @NeedToken
-    public ChanjetValueResult<Page<MerchantDto>> findMerchantList(@CookieValue("token")String token,@PathVariable int page,@PathVariable int size){
-        return ChanjetValueResult.success(merchantService.list(token,size,page));
+    public ChanjetValueResult<Page<MerchantDto>> findMerchantList(@CookieValue("token") String token, @PathVariable int page, @PathVariable int size) {
+        return ChanjetValueResult.success(merchantService.list(token, size, page));
     }
 
     /**
      * 保存商户信息
+     *
      * @param merchantSaveDto
      * @param token
      * @return
@@ -118,22 +125,22 @@ public class MerchantController {
      */
     @PostMapping("/saveMerchant")
     @NeedToken
-    public ChanjetValueResult<Boolean> saveMerchant(@RequestBody MerchantSaveDto merchantSaveDto,@CookieValue("token")String token) throws ChanjetApiException {
-        return ChanjetValueResult.success(merchantService.add(token,merchantSaveDto));
+    public ChanjetValueResult<Boolean> saveMerchant(@RequestBody MerchantSaveDto merchantSaveDto, @CookieValue("token") String token) throws ChanjetApiException {
+        return ChanjetValueResult.success(merchantService.add(token, merchantSaveDto));
     }
 
     /**
      * 获取账套列表
+     *
      * @param token
      * @return
      * @throws ChanjetApiException
      */
     @GetMapping("/getBookList")
     @NeedToken
-    public ChanjetValueResult<List<BookEntity>> saveMerchant(@CookieValue("token")String token) throws ChanjetApiException {
+    public ChanjetValueResult<List<BookEntity>> saveMerchant(@CookieValue("token") String token) throws ChanjetApiException {
         return ChanjetValueResult.success(merchantService.getBookList(token));
     }
-
 
 
     private File getFile(MultipartFile file) {

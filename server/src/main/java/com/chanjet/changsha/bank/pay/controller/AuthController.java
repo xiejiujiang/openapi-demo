@@ -41,24 +41,12 @@ public class AuthController {
     public void receiveCode(String code, HttpServletResponse response) throws IOException, ChanjetApiException {
         //接收code后返回用户基本信息
         User user = authService.receiveCode(code, response);
-        //设置Cookie并重定向到前端页面
+        //设置Cookie并重定向到前端页面,建议改为session机制或token机制保持登录状态
         Cookie cookie = new Cookie("token", user.getToken());
         cookie.setPath("/");
         cookie.setHttpOnly(false);
         cookie.setSecure(false);
         response.addCookie(cookie);
         response.sendRedirect(appConfig.getFrontUrl() + "?name=" + URLEncoder.encode(user.getName(),"UTF-8"));
-    }
-
-    /**
-     * 模拟前端页面获取cookie
-     *
-     * @param token
-     * @return
-     */
-    @RequestMapping("test")
-    public String test(@CookieValue("token") String token, @RequestParam String name) {
-        log.info("token:{},name:{}", token, name);
-        return token;
     }
 }

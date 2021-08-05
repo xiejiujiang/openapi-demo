@@ -1,9 +1,9 @@
 package com.chanjet.changsha.bank.pay.dto;
 
-import com.chanjet.changsha.bank.pay.entity.AbstractBaseEntity;
-import lombok.*;
-
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author: zsc
