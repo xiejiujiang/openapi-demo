@@ -1,12 +1,12 @@
 <template>
-  <div class="main" v-title data-title="长沙银行公共支付" v-show="listShow">
+  <div class="main" v-title data-title="openapi-demo" v-show="listShow">
     <chstop></chstop>
     <div class="content-box">
         <div class="content-white">
             <div class="chs-title">
-                <span>长沙银行支付商户信息</span>
+                <span>商户信息</span>
                 <a class="add-btn" @click="goFrom()">新增</a>
-                <p>(账套新增长沙银行支付通道）</p>
+                <p>(账套新增支付通道）</p>
             </div>
             <!-- 列表信息 -->
             <div class="chs-table">
@@ -97,7 +97,7 @@ export default {
           console.log('r---> ', r)
           this.chsList = r.resultList
           if( this.chsList.length == '0' ){
-            this.goFrom () 
+            this.goFrom ()
           }else {
             this.listShow = true
           }

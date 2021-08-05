@@ -1,10 +1,10 @@
 <template>
-    <div class="main" v-title data-title="长沙银行公共支付">
+    <div class="main" v-title data-title="openapi-demo">
         <chstop></chstop>
         <div class="content-box">
             <div class="content-white">
                 <div class="chs-title">
-                    <span>长沙银行支付商户信息</span>
+                    <span>商户信息</span>
                     <a class="back-list" @click="goback()">返回列表</a>
                 </div>
                 <!-- 表单 -->
@@ -98,14 +98,14 @@ export default {
 		let publicValid = ( rule, value, callback ) => {
 			if(this.$refs.public){
 				callback(new Error("请上传公钥文件"));
-        return	
+        return
 			}
 			callback()
 		}
 		let privateValid = ( rule, value, callback ) => {
 			if(this.$refs.private){
 				callback(new Error("请上传公钥文件"));
-        return	
+        return
 			}
 			callback()
 		}
@@ -248,7 +248,7 @@ export default {
 				// 	console.log('error submit!!')
 				// 	return false
 				// }else{
-          if (valid) {  
+          if (valid) {
             delete val.shkey
             chsApi.saveMerchant(val).then(r => {
               console.log('success', r)

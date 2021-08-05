@@ -1,10 +1,10 @@
 <template>
-    <div class="main" v-title data-title="长沙银行公共支付">
+    <div class="main" v-title data-title="openapi-demo">
         <chstop></chstop>
         <div class="content-box">
             <div class="content-white">
                 <div class="chs-title">
-                    <span>长沙银行支付商户信息</span>
+                    <span>商户信息</span>
                     <a class="back-list" @click="goback()">返回列表</a>
                 </div>
                 <!-- 详细信息 -->

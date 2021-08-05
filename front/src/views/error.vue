@@ -1,5 +1,5 @@
 <template>
-    <div class="main" v-title data-title="长沙银行公共支付">
+    <div class="main" v-title data-title="openapi-demo">
         <chstop></chstop>
         <div class="content-box">
             <div class="content-white">

@@ -16,9 +16,9 @@ app:
     #畅捷通开放平台地址
     chanjetOpenUrl: https://inte-openapi.chanjet.com
     #畅捷通开放平台appKey
-    appKey: ptPrU0YV
+    appKey: hdxtXDas
     #畅捷通开放平台appSecret
-    appSecret: 6C901AFCA78DEC78FCD67D7EA8DC9C0B
+    appSecret: 10FBDBD5C316ABD58E29BC488B723C91
     #加解密key
     encryptKey: 9876543210987654
     #Oauth重定向地址
