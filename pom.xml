@@ -16,12 +16,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.chanjet.changsha.bank</groupId>
-    <artifactId>changsha-bank-pay</artifactId>
+    <groupId>com.chanjet.openapi</groupId>
+    <artifactId>openapi-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>changsha-bank-pay</name>
-    <description>changsha-bank-pay</description>
+    <name>openapi-demo</name>
+    <description>openapi-demo</description>
 
     <properties>
         <java.version>1.8</java.version>

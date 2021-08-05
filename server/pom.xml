@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.chanjet.changsha.bank</groupId>
-        <artifactId>changsha-bank-pay</artifactId>
+        <groupId>com.chanjet.openapi</groupId>
+        <artifactId>openapi-demo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>changsha-bank-pay-service</artifactId>
+    <artifactId>openapi-demo-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>changsha-bank-pay-service</name>
-    <description>changsha-bank-pay-service</description>
+    <name>openapi-demo-service</name>
+    <description>openapi-demo-service</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>changsha-bank-pay-front</artifactId>
+            <artifactId>openapi-demo-front</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
