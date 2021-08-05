@@ -1,7 +1,5 @@
 package com.chanjet.changsha.bank.pay;
 
-import com.chanjet.changsha.bank.pay.utils.SignUtils;
-
 import java.util.HashMap;
 import java.util.TreeMap;
 

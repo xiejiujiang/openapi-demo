@@ -9,14 +9,13 @@ import com.chanjet.changsha.bank.pay.dao.UserDao;
 import com.chanjet.changsha.bank.pay.dto.MerchantDto;
 import com.chanjet.changsha.bank.pay.dto.MerchantSaveDto;
 import com.chanjet.changsha.bank.pay.entity.*;
-import com.chanjet.changsha.bank.pay.exception.*;
-import com.chanjet.changsha.bank.pay.pojo.OrderPayResponse;
+import com.chanjet.changsha.bank.pay.exception.KeyErrorException;
+import com.chanjet.changsha.bank.pay.exception.MerchantIsBindException;
+import com.chanjet.changsha.bank.pay.exception.NoTokenException;
 import com.chanjet.changsha.bank.pay.pojo.PushMerchantContent;
 import com.chanjet.changsha.bank.pay.pojo.PushMerchantResponse;
 import com.chanjet.changsha.bank.pay.service.MerchantService;
 import com.chanjet.changsha.bank.pay.spi.chanjet.ChanjetSpi;
-import com.chanjet.changsha.bank.pay.spi.csbank.OrderPay;
-import com.chanjet.changsha.bank.pay.utils.SignUtil;
 import com.chanjet.openapi.sdk.java.exception.ChanjetApiException;
 import com.chanjet.openapi.sdk.java.response.hsy.FindByEnterpriseIdResponse;
 import lombok.extern.log4j.Log4j2;
@@ -51,8 +50,6 @@ public class MerchantServiceImpl implements MerchantService {
     ChanjetSpi chanjetSpi;
     @Autowired
     AppConfig appConfig;
-    @Autowired
-    private CsBankCommandBuilder csBankCommandBuilder;
 
     @Override
     public String getPrivateKey(String merchantId,String bookId) {
@@ -75,26 +72,6 @@ public class MerchantServiceImpl implements MerchantService {
                 .privateKeyString(privateKeyString)
                 .key(password)
                 .build();
-        OrderPay orderPay = csBankCommandBuilder.create(OrderPay.class);
-        orderPay.setBackUrl("https://www.baidu.com");
-        orderPay.setECustId(merchantId);
-        orderPay.setUrl(appConfig.getOrderPayUrl());
-        orderPay.setPayMethod("7");
-        orderPay.setCardNo("123456789012345678");
-        orderPay.setMerchOrder(System.currentTimeMillis() + "");
-        orderPay.setOrderAmount("0.01");
-        orderPay.setRemark("测试");
-        orderPay.setPrivateKeyString(privateKeyString);
-        try {
-            OrderPayResponse orderPayResponse = orderPay.excute();
-            String msg = orderPayResponse.getMsg();
-           if (msg.contains("验签失败") || msg.contains("不存在")){
-               throw new KeyErrorException("您上传的私钥与商户ID【"+merchantId+"】不匹配，请检查数据重新上传");
-           }
-        } catch (ApiFailtureException | BadNetworkExcepiton e) {
-            log.error(e);
-            throw new KeyErrorException("系统错误，请稍后重试");
-        }
 
         return privateKeyDao.save(privateKey);
     }

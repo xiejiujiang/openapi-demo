@@ -17,10 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("app.config")
 public class AppConfig {
     /**
-     * 长沙银行网关地址
-     */
-    private String csBankUrl;
-    /**
      * 畅捷通开放平台地址
      */
     private String chanjetOpenUrl;
@@ -37,10 +33,6 @@ public class AppConfig {
      */
     private String encryptKey;
     /**
-     * 长沙银行支付结果通知地址
-     */
-    private String backUrl;
-    /**
      * OAuth重定向地址
      */
     private String redirectUri;
@@ -48,24 +40,4 @@ public class AppConfig {
      * 前端地址
      */
     private String frontUrl;
-    /**
-     * 撤销订单url
-     */
-    private String orderCancelUrl;
-    /**
-     * 支付url
-     */
-    private String orderPayUrl;
-    /**
-     * 查询支付订单url
-     */
-    private String queryOrderUrl;
-    /**
-     * 查询退款订单url
-     */
-    private String queryRefundOrderUrl;
-    /**
-     * 退款url
-     */
-    private String requestRefundUrl;
 }

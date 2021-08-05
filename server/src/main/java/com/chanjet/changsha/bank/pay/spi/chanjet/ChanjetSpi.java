@@ -1,7 +1,9 @@
 package com.chanjet.changsha.bank.pay.spi.chanjet;
 
 import com.chanjet.changsha.bank.pay.config.AppConfig;
-import com.chanjet.changsha.bank.pay.pojo.*;
+import com.chanjet.changsha.bank.pay.pojo.PushMerchantContent;
+import com.chanjet.changsha.bank.pay.pojo.PushMerchantRequest;
+import com.chanjet.changsha.bank.pay.pojo.PushMerchantResponse;
 import com.chanjet.openapi.sdk.java.ChanjetClient;
 import com.chanjet.openapi.sdk.java.domain.GetAppAccessTokenContent;
 import com.chanjet.openapi.sdk.java.domain.GetOrgAccessTokenContent;
@@ -144,23 +146,6 @@ public class ChanjetSpi {
         findByEnterpriseIdRequest.setRequestUri("/accounting/openapi/cc/book/findByEnterpriseId");
         findByEnterpriseIdRequest.addQueryParam("queryType", queryType);
         return chanjetClient.execute(findByEnterpriseIdRequest);
-    }
-
-
-    /**
-     * 推送支付订单信息
-     *
-     * @param pushOrderInfoContent
-     * @return
-     * @throws ChanjetApiException
-     */
-    public PushOrderInfoResponse pushOrderInfo(PushOrderInfoContent pushOrderInfoContent) throws ChanjetApiException {
-        PushOrderInfoRequest pushOrderInfoRequest = new PushOrderInfoRequest();
-        pushOrderInfoRequest.setAppKey(appConfig.getAppKey());
-        pushOrderInfoRequest.setAppSecret(appConfig.getAppSecret());
-        pushOrderInfoRequest.setRequestUri("/commonpay/pushOrderInfo");
-        pushOrderInfoRequest.setBizContent(pushOrderInfoContent);
-        return chanjetClient.execute(pushOrderInfoRequest);
     }
 
 

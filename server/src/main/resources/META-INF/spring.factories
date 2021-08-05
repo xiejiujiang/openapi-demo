@@ -1,7 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.chanjet.changsha.bank.pay.config.BeanConfig
-
-com.chanjet.changsha.bank.pay.event.EventHandler=\
-com.chanjet.changsha.bank.pay.event.handler.AppTicketHandler,\
-com.chanjet.changsha.bank.pay.event.handler.TempAuthCodeHandler
