@@ -7,7 +7,7 @@ package com.chanjet.openapi.demo.exception;
 public class MerchantIsBindException  extends  ErrorCodeException {
 
 
-    private static final ErrorConst SELF_CODE = ErrorConst.KEY_ERROR;
+    private static final ErrorConst SELF_CODE = ErrorConst.MERCHANT_IS_BIND;
     /**
      *
      */

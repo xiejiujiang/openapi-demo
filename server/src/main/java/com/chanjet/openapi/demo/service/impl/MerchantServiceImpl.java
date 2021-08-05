@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -125,6 +126,7 @@ public class MerchantServiceImpl implements MerchantService {
                 .build();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean add(String token,MerchantSaveDto merchantDto) throws ChanjetApiException {
         Merchant merchant = Merchant.builder()
@@ -141,10 +143,11 @@ public class MerchantServiceImpl implements MerchantService {
         Merchant merchantSave = merchantDao.saveAndFlush(merchant);
 
         //推送商户消息到支付系统
-        PushMerchantContent pushMerchantContent = PushMerchantContent.getInstance(merchantSave, appConfig.getAppKey());
-
-        PushMerchantResponse pushMerchantResponse = chanjetSpi.pushMerchant(token, pushMerchantContent);
-        return pushMerchantResponse.isStatus();
+//        PushMerchantContent pushMerchantContent = PushMerchantContent.getInstance(merchantSave, appConfig.getAppKey());
+//
+//        PushMerchantResponse pushMerchantResponse = chanjetSpi.pushMerchant(token, pushMerchantContent);
+//        return pushMerchantResponse.isStatus();
+        return true;
     }
 
     @Override
