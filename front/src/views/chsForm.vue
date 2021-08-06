@@ -34,35 +34,35 @@
                         <el-form-item label="收款账号" prop="accountName">
                             <el-input v-model.number="ruleForm.accountName"></el-input>
                         </el-form-item>
-												<el-form-item label="私钥" prop="private" id="si">
-                            <el-upload
-														ref="privateUpload"
-                            class="upload-demo"
-                            multiple
-                            :limit="1"
-                            :action="action"
-                            :on-remove="handleRemove"
-                            :before-upload="onBeforeUpload"
-                            :http-request="filePrivate">
-                            <el-button plain icon="el-icon-upload2">点击上传私钥文件</el-button>
-                            <div class="error-ubload">只能上传pfx后缀的文件</div>
-                            <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-                            </el-upload>
-                        </el-form-item>
-                        <el-form-item label="公钥" prop="public" id="gong">
-                            <el-upload
-                            class="upload-demo"
-                            multiple
-                            :limit="1"
-                            :action="action"
-                            :on-remove="handleRemove"
-                            :before-upload="onBeforeUpload"
-                            :http-request="filePublic">
-                            <el-button plain icon="el-icon-upload2">点击上传公钥文件</el-button>
-                            <div class="error-ubload">只能上传cer后缀的文件</div>
-                            <!--:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-                            </el-upload>
-                        </el-form-item>
+<!--												<el-form-item label="私钥" prop="private" id="si">-->
+<!--                            <el-upload-->
+<!--														ref="privateUpload"-->
+<!--                            class="upload-demo"-->
+<!--                            multiple-->
+<!--                            :limit="1"-->
+<!--                            :action="action"-->
+<!--                            :on-remove="handleRemove"-->
+<!--                            :before-upload="onBeforeUpload"-->
+<!--                            :http-request="filePrivate">-->
+<!--                            <el-button plain icon="el-icon-upload2">点击上传私钥文件</el-button>-->
+<!--                            <div class="error-ubload">只能上传pfx后缀的文件</div>-->
+<!--                            &lt;!&ndash;:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> &ndash;&gt;-->
+<!--                            </el-upload>-->
+<!--                        </el-form-item>-->
+<!--                        <el-form-item label="公钥" prop="public" id="gong">-->
+<!--                            <el-upload-->
+<!--                            class="upload-demo"-->
+<!--                            multiple-->
+<!--                            :limit="1"-->
+<!--                            :action="action"-->
+<!--                            :on-remove="handleRemove"-->
+<!--                            :before-upload="onBeforeUpload"-->
+<!--                            :http-request="filePublic">-->
+<!--                            <el-button plain icon="el-icon-upload2">点击上传公钥文件</el-button>-->
+<!--                            <div class="error-ubload">只能上传cer后缀的文件</div>-->
+<!--                            &lt;!&ndash;:file-list="fileList" <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> &ndash;&gt;-->
+<!--                            </el-upload>-->
+<!--                        </el-form-item>-->
                         <el-form-item style="text-align: center;" id="tijiao">
                             <el-button
                             style="width:200px;height:46px;"
@@ -144,13 +144,13 @@ export default {
         ],
         name: [
           { required: true, message: '请输入商户名称', trigger: 'blur' }
-        ],
-        public: [
-          { required: true, validator:publicValid }
-        ],
-        private: [
-          { required: true, validator:privateValid }
         ]
+        // public: [
+        //   { required: true, validator:publicValid }
+        // ],
+        // private: [
+        //   { required: true, validator:privateValid }
+        // ]
 			}
 		}
   },

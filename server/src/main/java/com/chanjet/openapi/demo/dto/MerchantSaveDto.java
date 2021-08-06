@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * 商户信息
@@ -55,11 +54,9 @@ public class MerchantSaveDto {
     /**
      * 私钥的id
      */
-    @NotNull
     private Long privateKeyId;
     /**
      * 公钥的id
      */
-    @NotNull
     private Long publicKeyId;
 }

@@ -48,6 +48,7 @@ public class MerchantController {
      * @return
      * @throws IOException
      */
+    @Deprecated
     @PostMapping("/uploadPublicKey")
     @NeedToken
     public ChanjetValueResult<KeyDto> uploadPublicKey(MultipartFile file) throws IOException {
@@ -73,6 +74,7 @@ public class MerchantController {
      * @throws IOException
      */
 
+    @Deprecated
     @PostMapping("/uploadPrivateKey")
     @NeedToken
     public ChanjetValueResult<KeyDto> uploadPrivateKey(MultipartFile file, String pwd, String merchantId) throws IOException {

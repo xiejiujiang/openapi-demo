@@ -29,14 +29,14 @@
                         <span class="info-left-sty">收款银行账户：</span>
                         <span>{{chsInfo.accountName}}</span>
                     </li>
-                    <li>
-                        <span class="info-left-sty">公钥：</span>
-                        <span>{{chsInfo.publicKeyFileName}}</span>
-                    </li>
-                    <li>
-                        <span class="info-left-sty">私钥：</span>
-                        <span>{{chsInfo.privateKeyFileName}}</span>
-                    </li>
+<!--                    <li>-->
+<!--                        <span class="info-left-sty">公钥：</span>-->
+<!--                        <span>{{chsInfo.publicKeyFileName}}</span>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <span class="info-left-sty">私钥：</span>-->
+<!--                        <span>{{chsInfo.privateKeyFileName}}</span>-->
+<!--                    </li>-->
                 </ul>
             </div>
         </div>
