@@ -98,12 +98,12 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     private MerchantDto getMerchantDto(Merchant merchant) {
-        String privateFileName = privateKeyDao.findById(merchant.getPrivateKeyId()).orElse(new PrivateKey()).getFileName();
-        String publicFileName = publicKeyDao.findById(merchant.getPublicKeyId()).orElse(new PublicKey()).getFileName();
+//        String privateFileName = privateKeyDao.findById(merchant.getPrivateKeyId()).orElse(new PrivateKey()).getFileName();
+//        String publicFileName = publicKeyDao.findById(merchant.getPublicKeyId()).orElse(new PublicKey()).getFileName();
         MerchantDto merchantDto = new MerchantDto();
         BeanUtils.copyProperties(merchant, merchantDto);
-        merchantDto.setPrivateKeyFileName(privateFileName);
-        merchantDto.setPublicKeyFileName(publicFileName);
+//        merchantDto.setPrivateKeyFileName(privateFileName);
+//        merchantDto.setPublicKeyFileName(publicFileName);
         return merchantDto;
     }
 
