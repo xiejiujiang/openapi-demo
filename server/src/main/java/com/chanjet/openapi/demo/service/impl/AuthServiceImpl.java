@@ -28,16 +28,22 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User receiveCode(String code, HttpServletResponse response) throws ChanjetApiException {
-        GetTokenResponse getTokenResponse = chanjetSpi.getToken(code, appConfig.getRedirectUri());
+        GetTokenResponse.Result result = chanjetSpi.getToken(code, appConfig.getRedirectUri()).getResult();
         //保存用户信息
-        User user = userDao.findUserByOrgIdAndUserId(getTokenResponse.getResult().getOrgId(), getTokenResponse.getResult().getUserId());
+        User user = userDao.findUserByOrgIdAndUserIdAndAppName(result.getOrgId(), result.getUserId(), result.getAppName());
+        //企业ID、用户ID、appName三要素未找到的情况下直接创建用户信息
         if (null == user) {
-            user = new User();
-            user.setOrgId(getTokenResponse.getResult().getOrgId());
-            user.setUserId(getTokenResponse.getResult().getUserId());
+            user = User.builder()
+                    .orgId(result.getOrgId())
+                    .userId(result.getUserId())
+                    .appName(result.getAppName())
+                    .build();
         }
-        user.setToken(getTokenResponse.getResult().getAccessToken());
-        user.setUserAuthPermanentCode(getTokenResponse.getResult().getUserAuthPermanentCode());
+        user.setToken(result.getAccessToken());
+        user.setUserAuthPermanentCode(result.getUserAuthPermanentCode());
+        user.setRefreshToken(result.getRefreshToken());
+        user.setExpiresIn(result.getExpiresIn());
+        user.setRefreshExpiresIn(result.getRefreshExpiresIn());
         //获取畅捷通用户信息
         UserResponse userResponse = chanjetSpi.user(user.getToken());
         user.setName(userResponse.getName());

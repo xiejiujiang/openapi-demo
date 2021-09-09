@@ -35,12 +35,29 @@ public class User extends AbstractBaseEntity<Long> {
      */
     private String orgId;
     /**
+     * 应用名
+     */
+    private String appName;
+    /**
      * 用户token
      */
     @Column(nullable = false, unique = true, length = 2048)
     private String token;
     /**
+     * token过期时间，单位s
+     */
+    private Long expiresIn;
+    /**
      * 用户永久授权码
      */
     private String userAuthPermanentCode;
+    /**
+     * 更新令牌
+     */
+    private String refreshToken;
+
+    /**
+     * 更新令牌过期时间，单位s
+     */
+    private Long refreshExpiresIn;
 }

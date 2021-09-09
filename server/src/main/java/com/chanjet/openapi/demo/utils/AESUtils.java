@@ -45,22 +45,4 @@ public class AESUtils {
         bytes = cipher.doFinal(bytes);
         return new String(bytes, StandardCharsets.UTF_8);
     }
-
-
-    public static void main(String[] args) {
-        String content = "{\"id\":\"75e9456ac5ee43ebb0a0a26a3a7d7da5\",\"appKey\":\"ptPrU0YV\",\"msgType\":\"REFUND\",\"time\":\"1605167299197\",\"bizContent\":{\"payOrderId\":\"isvtesta00s1hor8dsqerkkk\",\"refundOrderId\":\"isvtesta00s1hor8dsqerkkk666\",\"refundAmount\":\"1\",\"totalAmount\":\"1\",\"operator\":\"21q\",\"thirdOrderId\":\"202011123001723253\",\"merchanId\":\"E2020052200035\",\"bookId\":\"1221659663138816\"}}";
-        System.out.println("加密前：" + content);
-        String key = "9876543210987654";
-        System.out.println("加密密钥和解密密钥：" + key);
-        try {
-            String encrypt = aesEncrypt(content, key);
-            System.out.println("加密后：" + encrypt);
-//            String str = " Ww/5c2K+8uJS8F9Z2Gsi3fDvHEhsUNktFRyJZdjSqjeGV8SzbnCiv2oSwRoTft2T6NsHviUS3zHqYwvKVsgOfNR6QVOzerfB+9LekYqf4iGp+D7kKA+v2MxPl84gWB7yJAa10JjEkzZkcb3SL9kLE5ngmJ6furfOXMbls4jg07CN2TaokUDrQudvpX6yAKoEvAHmV2KJBrk/1g/AjxVtSt8rp0Dn/rQn/c1gUVA6cgs9PKhOEXS/M50xxIatrc17Uv+OCdLpmpmJNeL87DtkBftwDnQhIq2EWc7pIWvi1SUxBwMpAIiIieWiHCHxFMvU";
-//            String decrypt = aesDecrypt(str, "testchaotestchao");
-            String decrypt = aesDecrypt(encrypt, key);
-            System.out.println("解密后：" + decrypt);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

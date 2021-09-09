@@ -47,6 +47,8 @@ public class AuthController {
         cookie.setHttpOnly(false);
         cookie.setSecure(false);
         response.addCookie(cookie);
-        response.sendRedirect(appConfig.getFrontUrl() + "?name=" + URLEncoder.encode(user.getName(),"UTF-8"));
+        response.sendRedirect(appConfig.getFrontUrl() + "?name=" + URLEncoder.encode(user.getName(), "UTF-8"));
+        //TODO 将token信息保存
+
     }
 }
