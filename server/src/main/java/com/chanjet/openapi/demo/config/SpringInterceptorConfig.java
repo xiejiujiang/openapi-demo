@@ -19,14 +19,7 @@ public class SpringInterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
         registry.addInterceptor(new LogInterceptor());
         registry.addInterceptor(new StaticInterceptor());
-    }
-
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer
-                .addPathPrefix("api", c -> c.isAnnotationPresent(ApiRestController.class));
     }
 }

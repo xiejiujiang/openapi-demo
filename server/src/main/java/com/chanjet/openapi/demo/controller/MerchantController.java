@@ -1,6 +1,5 @@
 package com.chanjet.openapi.demo.controller;
 
-import com.chanjet.openapi.demo.annotation.ApiRestController;
 import com.chanjet.openapi.demo.annotation.NeedToken;
 import com.chanjet.openapi.demo.common.ChanjetValueResult;
 import com.chanjet.openapi.demo.dto.KeyDto;
@@ -32,9 +31,8 @@ import java.util.UUID;
  * @author: zsc
  * @create: 2020/11/5 3:06 下午
  **/
-@ApiRestController
 @RestController
-@RequestMapping("merchant")
+@RequestMapping("/api/merchant")
 @Log4j2
 public class MerchantController {
 

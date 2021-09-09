@@ -1,6 +1,5 @@
 package com.chanjet.openapi.demo.controller;
 
-import com.chanjet.openapi.demo.annotation.ApiRestController;
 import com.chanjet.openapi.demo.common.Constants;
 import com.chanjet.openapi.demo.common.MsgType;
 import com.chanjet.openapi.demo.config.AppConfig;
@@ -31,9 +30,8 @@ import java.util.Map;
  * @create: 2020/11/5 4:57 下午
  **/
 @Log4j2
-@ApiRestController
 @RestController
-@RequestMapping("message")
+@RequestMapping("/api/message")
 public class MessageController {
     @Autowired
     ApplicationContext applicationContext;
@@ -77,6 +75,9 @@ public class MessageController {
     private Object execute(String msg, String msgType) {
         Map<String, String> responseMap = new HashMap<>();
         switch (msgType) {
+            case MsgType.APP_TEST:
+                responseMap.put(Constants.RESULT, Constants.SUCCESS);
+                return responseMap;
             case MsgType.APP_TICKET:
                 Type appTicketType = new TypeToken<ChanjetMsg<AppTicketContent>>() {
                 }.getType();
@@ -92,7 +93,7 @@ public class MessageController {
                 responseMap.put(Constants.RESULT, Constants.SUCCESS);
                 return responseMap;
             default:
-                responseMap.put(Constants.RESULT, Constants.SUCCESS);
+                responseMap.put(Constants.RESULT, Constants.FAIL);
                 return responseMap;
         }
     }

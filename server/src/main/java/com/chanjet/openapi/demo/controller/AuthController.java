@@ -19,9 +19,8 @@ import java.net.URLEncoder;
  * @create: 2020/11/5 3:05 下午
  **/
 @Log4j2
-@ApiRestController
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
